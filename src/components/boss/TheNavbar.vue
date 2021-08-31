@@ -9,38 +9,36 @@
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav" v-if="isLoggedIn">
-         <li @click="logout" class="nav-item">
-          <a class="btn btn-danger" aria-current="page" href="#">Logout-({{getCurrentUser }}) </a>
-        </li>
-        
-      </ul>
+     
       
       <ul  class="navbar-nav ms-auto">
         <li class="nav-item">
-          <router-link class="nav-link active" aria-current="page" to="/">Home</router-link>
+          <router-link class="nav-link active" aria-current="page" to="/">home</router-link>
         </li>
-        <li v-if="isLoggedIn" class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#">Your Channel</a>
-        </li>
+       
         <li v-if="isLoggedIn" class="nav-item ">
-          <a class="nav-link" href="#">Pending List</a>
+          <a class="nav-link" href="#"> list</a>
         </li>
         
         
         
-        <li class="nav-item">
-          <a class="btn btn-warning" href="#">Donate {{isLoggedIn }}</a>
-        </li>
+        
 
         <li class="nav-item">
-          <router-link class="nav-link" to="/admin">Admin-Login </router-link>
+          <router-link class="nav-link" to="/admin">admin </router-link>
         </li>
-         <li class="nav-item">
-          <router-link class="nav-link" to="/entry/1123">Make Entry</router-link>
+         <li v-if="isLoggedIn" class="nav-item">
+          <router-link class="nav-link" to="/entry/1123"> entry</router-link>
         </li>
-         <li class="nav-item">
-          <router-link class="nav-link" aria-current="page" to="/"> <u>User-Login</u>  </router-link>
+         
+        <li class="nav-item">
+          <a class="nav-link" href="#">donate</a>
+        </li>
+        
+      </ul>
+       <ul class="navbar-nav" v-if="isLoggedIn">
+         <li @click="logout" class="nav-item">
+          <a class="nav-link" aria-current="page" href="#"><span class="mt-2 badge bg-danger">logout ({{getCurrentUser }})</span> </a>
         </li>
         
       </ul>
@@ -69,6 +67,8 @@
     }
 </script>
 
-<style lang="scss" scoped>
-
+<style  scoped>
+.bg-dark {
+    background: linear-gradient(230deg,#030fb8 ,rgb(179, 230, 253)) !important;
+}
 </style>

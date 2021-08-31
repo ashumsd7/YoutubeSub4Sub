@@ -2,15 +2,15 @@
 <div id="login" >
     <div class="row">
      
-    <div class="col-lg-2">
+    <div class="col-lg-6">
     
-
+        <img src="../../assets/chat.png" class="img-fluid p-3" width="300" height="300"  alt="">
     </div>
       
-     <div class="col-lg-8 ">
+     <div class="col-lg-5 ">
         
  <form @submit.prevent="onSubmit">
-    <strong>User Login</strong>
+    <strong class="heading">User Login</strong>
     <hr>
   <!-- <div class="mb-3">
     <label for="exampleInputEmail1" class="form-label">User ID</label>
@@ -23,10 +23,11 @@
         <div id="passHelp" class="form-text">Enter your unique passcode.</div>
   </div>
  
-  <button type="submit" class="btn btn-primary mb-2">Quick -Login</button>
+  <button type="submit" class="btn btn-primary mb-2">Login</button>
 
 </form>
- <button type="submit" @click="autoLogin" class="btn btn-info auto-login">Try Auto Login</button>
+ <button type="submit" @click="autoLogin" class="btn btn-success auto-login"> Auto Login</button>
+ <p class="request_text">Request for a Passcode ? </p>
     </div>
 
      <div class="col-lg-2">
@@ -42,6 +43,14 @@
 
 <script>
     export default {
+         computed:{
+          isLoggedIn(){
+            return this.$store.getters.isLoggedIn;
+          },
+         
+          
+         
+        },
         data() {
             return {
                 passcode:null
@@ -54,10 +63,16 @@
          
                       this.$store.dispatch('loginAction',{passcode: this.passcode })
                  
-              
+                     this.$router.push('/list')
+                 
+
             },
             autoLogin(){
    this.$store.dispatch('autoLoginAction')
+   
+                     this.$router.push('/list')
+                 
+   
             }
         },
     }
@@ -72,5 +87,20 @@
 }
 .auto-login{
    width: auto;
+}
+.heading{
+    font-size: 1.5rem;
+    color: rgb(250, 60, 60);
+}
+label{
+    font-weight: 500;
+    color: darkblue;
+}
+.request_text{
+    margin-top: 10px;
+    color: rgb(253, 68, 68);
+    cursor: pointer;
+    text-decoration: underline;
+
 }
 </style>

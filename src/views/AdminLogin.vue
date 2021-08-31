@@ -2,13 +2,13 @@
 <div id="login" >
     <div class="row">
 
-
-    <div class="col-lg-2">
-
+        
+    <div class="col-lg-6">
+        <img src="../assets/admin.png" alt="" class="img-fluid p-3 mt-5" width="300" height="300" srcset="">
     </div>
-     <div class="col-lg-8 mt-5">
+     <div class="col-lg-5 mt-3">
  <form @submit.prevent="onSubmit">
-       <strong>Admin Login</strong>
+       <strong class="heading">Admin Login</strong>
        
     <hr>
   
@@ -27,9 +27,7 @@
   <button type="submit" class="btn btn-primary">Submit</button>
 </form>
     </div>
-     <div class="col-lg-2">
-
-    </div>
+     
    
     </div>
 </div>
@@ -57,12 +55,25 @@ export default {
 </script>
 
 <style  scoped>
+.row{
+    margin-top: 20vh;
+    margin-left: 10%;
+    margin-right: 10%;
+    
+}
 form {
-  margin-top: 20vh;
   margin-left: 10%;
   margin-right: 10%;
 }
 .invalidId{
     color: red;
+}
+.heading{
+    font-size: 1.5rem;
+    color: rgb(250, 60, 60);
+}
+label{
+    font-weight: 500;
+    color: darkblue;
 }
 </style>
