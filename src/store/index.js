@@ -81,6 +81,7 @@ export default new Vuex.Store({
        payload.passcode = payload.passcode.toString();
 
       let data;
+      
     
        data = {url:payload.link,date:new Date().toLocaleString()}
       
@@ -109,7 +110,7 @@ export default new Vuex.Store({
            let i=0;
             for(let val in fetchedLinks){
              
-              fetchedLinkArray.push({links: fetchedLinks[val].url,id:++i})
+              fetchedLinkArray.push({links: fetchedLinks[val].url,id:++i,date:fetchedLinks[val].date})
             }
             context.commit('UPDATE_YOUTUBE_LINKS',fetchedLinkArray)
           

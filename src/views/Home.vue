@@ -1,7 +1,7 @@
 <template>
 <div id="home">
 
-
+<home-screen></home-screen>
 </div>
 </template>
 
@@ -9,12 +9,12 @@
 // @ is an alias to /src
 
 
-import Login  from '../components/user/Login.vue'
+import HomeScreen  from '../components/inViews/HomeScreen.vue'
 export default {
   name: 'Home',
   components: {
-
-  Login
+HomeScreen
+  
   }
 }
 </script>

@@ -46,6 +46,10 @@ export default {
     onSubmit() {
         if(this.adminId!=='boomboom'){
             this.isAdminErr=true;
+            setTimeout(() => {
+                 this.isAdminErr=false;
+                 this.adminId=''
+            }, 1000);
             return;
         }
       this.$store.dispatch("adminLoginAction", { passcode: this.passcode });
@@ -56,7 +60,7 @@ export default {
 
 <style  scoped>
 .row{
-    margin-top: 20vh;
+    margin-top: 12vh;
     margin-left: 10%;
     margin-right: 10%;
     

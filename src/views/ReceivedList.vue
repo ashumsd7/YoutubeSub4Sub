@@ -1,7 +1,8 @@
 <template>
    <div class="row">
-     <strong class="heading">>List of Received Requests for subscribtions :  {{getAllLinks.length}}/40</strong>
-     
+     <small class="heading"> > Requests List for subscribtions :</small>
+     <small  class="heading">>Subscribe These channels and help them.</small>
+     <small class="heading"> >Showing {{getAllLinks.length}} /40 Requests</small>
        <table class="table ">
   <thead>
     <tr>
@@ -14,8 +15,8 @@
   <tbody>
     <tr v-for="item in getAllLinks" :key="item.id">
       <td class="text-center" scope="row"><span class="badge bg-dark">{{item.id}} </span></td>
-      <td><a :href="item.links">  <span class="badge bg-info text-dark">{{ item.links}}</span> </a></td>
-      <td class="text-center">Otto</td>
+      <td><a :href="item.links">  {{ item.links}}</a></td>
+      <td class="text-center"><small>{{ item.date}}</small></td>
     
     </tr>
    
@@ -67,5 +68,6 @@ td:last-child{
 .heading{
     font-size: 1.2rem;
     color: rgb(250, 60, 60);
+    font-weight: 500;
 }
 </style>

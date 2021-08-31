@@ -26,4 +26,8 @@ export default {
     margin-right: 10%;
     
 }
+.router-link-exact-active{
+  color: rgb(248, 123, 123) !important;
+  font-weight: bolder;
+}
 </style>

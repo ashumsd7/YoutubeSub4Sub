@@ -75,6 +75,6 @@
 
 <style  scoped>
 .bg-dark {
-    background: linear-gradient(230deg,#030fb8 ,rgb(179, 230, 253)) !important;
+    background: linear-gradient(230deg,#396cf8 ,rgb(82, 67, 245)) !important;
 }
 </style>

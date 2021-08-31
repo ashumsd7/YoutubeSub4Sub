@@ -1,17 +1,17 @@
 <template>
   <div id="login">
     <div class="row">
-      <div class="col-lg-6">
+      <div class="col-lg-5">
         <img
           src="../assets/people.png"
           alt=""
-          class="img-fluid p-3 mt-5"
+          class="img-fluid  mt-5"
           width="300"
           height="300"
           srcset=""
         />
       </div>
-      <div class="col-lg-5 mt-5">
+      <div class="col-lg-5 mt-6">
         <form @submit.prevent="onSubmit">
           <strong class="heading">Request for your subscription !!</strong>
 
@@ -24,15 +24,16 @@
             <input
               maxlength="8"
               v-model.trim="requestedID"
-              readonly
-              required
+               required
+              :readonly='isReadonly'
+              @dblclick="makeEditable"
               type="search"
               placeholder="ex: admin001"
               class="form-control"
               id="exampleInputEmail1"
               aria-describedby="emailHelp"
             />
-            <!-- <div id="emailHelp" class="form-text">Enter Admin ID</div> -->
+            <div id="emailHelp" class="form-text">Double click to change it.</div>
           </div>
           <div class="mb-3">
             <label for="exampleInputPassword1" class="form-label"
@@ -48,8 +49,12 @@
             />
             <div id="passHelp" class="form-text">Enter your channel link</div>
             <small v-if="isURLError" class="invalidId">
-              Sorry, Link you have netered is not a youtube link.
+              Sorry, Link you have entered is not a youtube link.
             </small>
+
+            
+      
+          
           </div>
 
           <button type="submit" class="btn btn-danger">Request</button>
@@ -66,6 +71,7 @@ export default {
       link: null,
       requestedID: null,
       isURLError: false,
+      isReadonly:true
     };
   },
   computed: {
@@ -102,6 +108,9 @@ export default {
         /^(?:https?:\/\/)?(?:www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/;
       return url.match(p) ? RegExp.$1 : false;
     },
+    makeEditable(){
+        this.isReadonly=false
+    }
   },
 };
 </script>

@@ -68,9 +68,17 @@
 
             },
             autoLogin(){
-   this.$store.dispatch('autoLoginAction')
+                let passcode= localStorage.getItem('passcode')
+                let answer= confirm(`We are trying to login with this ${passcode} passcode?`, false)
+                if(answer){
+                    this.$store.dispatch('autoLoginAction')
    
                      this.$router.push('/list')
+                }
+                else{
+                    return;
+                }
+   
                  
    
             }
