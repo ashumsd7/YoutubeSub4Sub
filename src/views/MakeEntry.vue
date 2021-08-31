@@ -1,10 +1,12 @@
 <template>
   <div id="login">
     <div class="row">
-      <div class="col-lg-2"></div>
-      <div class="col-lg-8 mt-5">
+      <div class="col-lg-6">
+           <img src="../assets/people.png" alt="" class="img-fluid p-3 mt-5" width="300" height="300" srcset="">
+      </div>
+      <div class="col-lg-5 mt-5">
         <form @submit.prevent="onSubmit">
-          <strong>Request for your subscription !!</strong>
+          <strong class="heading">Request for your subscription !!</strong>
 
           <hr />
 
@@ -26,7 +28,7 @@
               id="exampleInputEmail1"
               aria-describedby="emailHelp"
             />
-            <div id="emailHelp" class="form-text">Enter Admin ID</div>
+            <!-- <div id="emailHelp" class="form-text">Enter Admin ID</div> -->
           </div>
           <div class="mb-3">
             <label for="exampleInputPassword1" class="form-label"
@@ -44,10 +46,9 @@
             <div id="passHelp" class="form-text">Enter your channel link</div>
           </div>
 
-          <button type="submit" class="btn btn-primary">Request</button>
+          <button type="submit" class="btn btn-danger">Request</button>
         </form>
       </div>
-      <div class="col-lg-2"></div>
     </div>
   </div>
 </template>
@@ -61,9 +62,21 @@ export default {
       isURLError: false,
     };
   },
+  computed:{
+          isLoggedIn(){
+            return this.$store.getters.isLoggedIn;
+          },
+         
+         
+        },
   created() {
     this.requestedID = this.$route.params.id;
   },
+//   beforeRouteEnter (to, from, next) {
+//       if(!this.isLoggedIn){
+//           this.$router.push('/')
+//       }
+//   },
   methods: {
     onSubmit() {
       this.$store.dispatch("makeEntryAction", {
@@ -76,10 +89,24 @@ export default {
 </script>
 
 <style  scoped>
+.row{
+    margin-top: 20vh;
+    margin-left: 10%;
+    margin-right: 10%;
+    
+}
 form {
-  margin-top: 20vh;
+  
   margin-left: 10%;
   margin-right: 10%;
+}
+.heading{
+    font-size: 1.2rem;
+    color: rgb(250, 60, 60);
+}
+label{
+    font-weight: 500;
+    color: darkblue;
 }
 .invalidId {
   color: red;

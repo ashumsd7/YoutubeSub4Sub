@@ -38,6 +38,7 @@
 </script>
 
 <style  scoped>
+
 .row{
     margin-top: 20vh;
 }

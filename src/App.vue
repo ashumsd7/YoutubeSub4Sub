@@ -11,7 +11,7 @@ export default {
     TheNavbar
   },
   created() {
-     this.$store.dispatch('autoLoginAction')
+    //  this.$store.dispatch('autoLoginAction')
   },
 }
 </script>
@@ -19,5 +19,11 @@ export default {
 
 *{
   overflow-x: hidden;
+}
+.row{
+    margin-top: 20vh;
+    margin-left: 10%;
+    margin-right: 10%;
+    
 }
 </style>

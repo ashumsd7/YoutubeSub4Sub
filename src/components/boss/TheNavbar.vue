@@ -27,12 +27,17 @@
         <li class="nav-item">
           <router-link class="nav-link" to="/admin">admin </router-link>
         </li>
+        
          <li v-if="isLoggedIn" class="nav-item">
           <router-link class="nav-link" to="/entry/1123"> entry</router-link>
         </li>
          
         <li class="nav-item">
-          <a class="nav-link" href="#">donate</a>
+          <router-link class="nav-link" to="/donate">donate</router-link>
+        </li>
+
+         <li class="nav-item">
+          <router-link class="nav-link active" aria-current="page" to="/auth">login</router-link>
         </li>
         
       </ul>
