@@ -4,7 +4,7 @@
        <table class="table ">
   <thead>
     <tr>
-      <th scope="col">#S.No.</th>
+      <th class="text-center" scope="col">#S.No.</th>
       <th  scope="col">Links</th>
       <th class="text-center" scope="col">Date</th>
    
@@ -12,15 +12,15 @@
   </thead>
   <tbody>
     <tr v-for="item in getAllLinks" :key="item.id">
-      <th class="ml-2" scope="row">{{item.id}}</th>
-      <td><a :href="item.link"> {{ item.links}}</a></td>
+      <td class="text-center" scope="row">{{item.id}}</td>
+      <td><a :href="item.links"> {{ item.links}} </a></td>
       <td class="text-center">Otto</td>
     
     </tr>
    
   </tbody>
 </table>
-{{getAllLinks}}
+
    </div>
 </template>
 
@@ -28,7 +28,7 @@
     export default {
         computed:{
           getAllLinks(){
-            return this.$store.getters.getAllLinks;
+            return this.$store.getters.getAllLinks.reverse();
           },
          
           
@@ -46,5 +46,9 @@
 }
 th{
     margin-left: 20px;
+}
+tr th{
+    background: rgb(121, 123, 252);
+    color: rgb(234, 241, 250);
 }
 </style>
