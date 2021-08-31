@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import AdminPanel from '../views/AdminLogin.vue'
+import MakeEntry from '../views/MakeEntry.vue'
 
 Vue.use(VueRouter)
 
@@ -15,6 +16,11 @@ Vue.use(VueRouter)
     path: '/admin',
     name: 'Admin',
     component: AdminPanel
+  },
+    {
+      path: '/entry/:id',
+    name: 'Entry',
+    component: MakeEntry
   },
 
 ]

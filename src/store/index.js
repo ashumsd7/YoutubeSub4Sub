@@ -19,6 +19,9 @@ export default new Vuex.Store({
     },
     UPDATE_LOGIN_STATUS(state,status) {
       state.isLoggedIn= status
+    },
+     UPDATE_YOUTUBE_LINKS(state,links) {
+      state.allLink= links
     }
   },
   actions: {
@@ -42,10 +45,12 @@ export default new Vuex.Store({
       axios.get(`https://sub4sub-cb7f9-default-rtdb.firebaseio.com/${context.state.currentUserPasscode}.json`)
         .then(res => {
           if (res.data !== null) {
+            console.log(res.data);
             context.commit('UPDATE_LOGIN_STATUS', true);
-            localStorage.setItem('passcode',context.state.currentUserPasscode )
+            localStorage.setItem('passcode', context.state.currentUserPasscode);
+            context.dispatch('fetchUsersPasscode',{passcode:context.state.currentUserPasscode})
           }
-        console.log(res);
+        // console.log(res);
         }).catch(err => {
         console.log(err);
       })
@@ -54,7 +59,11 @@ export default new Vuex.Store({
     adminLoginAction(context, payload) {
       payload.passcode = payload.passcode.toString();
       context.commit('UPDATE_USER', payload);
-      let data = {url:'https://google.co.in'}
+      let data;
+    
+       data = {url:'https://google.co.in'}
+      
+       
       let user = context.state.currentUserPasscode.toString();
     
       axios.post(`https://sub4sub-cb7f9-default-rtdb.firebaseio.com/${user}.json`,data)
@@ -67,8 +76,50 @@ export default new Vuex.Store({
         console.log("errtr",err);
       })
     },
-    fetchUsersPasscode() {
+
+    makeEntryAction(context, payload) {
+       payload.passcode = payload.passcode.toString();
+
+      let data;
+    
+       data = {url:payload.link}
       
+       
+      let user = payload.passcode.toString();
+    
+      axios.post(`https://sub4sub-cb7f9-default-rtdb.firebaseio.com/${user}.json`,data)
+        .then(res => {
+         if (!res.data) {
+            context.dispatch('UPDATE_LOGIN_STATUS', true)
+          }
+        console.log(res);
+        }).catch(err => {
+        console.log("errtr",err);
+      })
+    },
+    fetchUsersPasscode(context, payload) {
+    
+     
+        axios.get(`https://sub4sub-cb7f9-default-rtdb.firebaseio.com/${payload.passcode}.json`)
+        .then(res => {
+          
+     
+            let fetchedLinks = res.data;
+            let fetchedLinkArray=[]
+           
+            for(let val in fetchedLinks){
+             
+              fetchedLinkArray.push({links: fetchedLinks[val].url})
+            }
+            context.commit('UPDATE_YOUTUBE_LINKS',fetchedLinkArray)
+          
+      
+       
+        }).catch(err => {
+        console.log(err);
+        })
+      
+     
     }
   },
   getters: {

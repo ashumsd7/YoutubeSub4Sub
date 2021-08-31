@@ -9,7 +9,10 @@ import TheNavbar from './components/boss/TheNavbar.vue'
 export default {
   components:{
     TheNavbar
-  }
+  },
+  created() {
+    // this.$store.dispatch('fetchUsersPasscode')
+  },
 }
 </script>
 <style lang="scss">
