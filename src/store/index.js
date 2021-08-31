@@ -82,7 +82,7 @@ export default new Vuex.Store({
 
       let data;
     
-       data = {url:payload.link}
+       data = {url:payload.link,date:new Date().toLocaleString()}
       
        
       let user = payload.passcode.toString();

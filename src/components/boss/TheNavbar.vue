@@ -13,11 +13,11 @@
       
       <ul  class="navbar-nav ms-auto">
         <li class="nav-item">
-          <router-link class="nav-link active" aria-current="page" to="/">home</router-link>
+          <router-link class="nav-link " aria-current="page" to="/">home</router-link>
         </li>
        
         <li v-if="isLoggedIn" class="nav-item ">
-          <a class="nav-link" href="#"> list</a>
+          <router-link class="nav-link" to="/list"> list</router-link>
         </li>
         
         
@@ -36,8 +36,8 @@
           <router-link class="nav-link" to="/donate">donate</router-link>
         </li>
 
-         <li class="nav-item">
-          <router-link class="nav-link active" aria-current="page" to="/auth">login</router-link>
+         <li v-if="!isLoggedIn" class="nav-item">
+          <router-link class="nav-link " aria-current="page" to="/auth">login</router-link>
         </li>
         
       </ul>
@@ -45,6 +45,7 @@
          <li @click="logout" class="nav-item">
           <a class="nav-link" aria-current="page" href="#"><span class="mt-2 badge bg-danger">logout ({{getCurrentUser }})</span> </a>
         </li>
+  
         
       </ul>
     </div>
