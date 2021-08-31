@@ -106,10 +106,10 @@ export default new Vuex.Store({
      
             let fetchedLinks = res.data;
             let fetchedLinkArray=[]
-           
+           let i=0;
             for(let val in fetchedLinks){
              
-              fetchedLinkArray.push({links: fetchedLinks[val].url})
+              fetchedLinkArray.push({links: fetchedLinks[val].url,id:++i})
             }
             context.commit('UPDATE_YOUTUBE_LINKS',fetchedLinkArray)
           
@@ -128,6 +128,9 @@ export default new Vuex.Store({
     },
     getCurrentUser(state) {
       return state.currentUserPasscode;
+    },
+    getAllLinks(state){
+      return state.allLink;
     }
     
  }

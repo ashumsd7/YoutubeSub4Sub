@@ -11,7 +11,7 @@ export default {
     TheNavbar
   },
   created() {
-    // this.$store.dispatch('fetchUsersPasscode')
+     this.$store.dispatch('autoLoginAction')
   },
 }
 </script>

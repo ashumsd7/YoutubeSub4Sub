@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import AdminPanel from '../views/AdminLogin.vue'
 import MakeEntry from '../views/MakeEntry.vue'
+import ReceivedList from '../views/ReceivedList.vue'
 
 Vue.use(VueRouter)
 
@@ -22,6 +23,11 @@ Vue.use(VueRouter)
     name: 'Entry',
     component: MakeEntry
   },
+  {
+    path: '/list',
+  name: 'List',
+  component: ReceivedList
+},
 
 ]
 
