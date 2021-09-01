@@ -29,7 +29,7 @@
             >
             <input
               maxlength="10"
-              v-model.trim.lazy="passcode"
+              v-model.trim.lazy.number="passcode"
               placeholder="ex: 1234567890"
               required
               type="search"
@@ -43,13 +43,13 @@
 
           <button type="submit" class="btn btn-primary mb-2 login_btn">Login</button>
         </form>
-        <a
+        <!-- <a
           type="submit"
           @click="autoLogin"
           class=" auto-login"
         >
-         Try auto login
-        </a>
+         Try auto login {{isLoginError}}
+        </a> -->
         <p class="request_text mr-2"> <router-link to="/passcode">Request for a Passcode ?</router-link> </p>
       </div>
 
@@ -83,25 +83,25 @@ export default {
       }
      }, 2000);
     },
-    autoLogin() {
-      let passcode = localStorage.getItem("passcode");
-      if(!passcode){
-          alert("Auto login failed, Please try mannualy.")
+    // autoLogin() {
+    //   let passcode = localStorage.getItem("passcode");
+    //   if(!passcode){
+    //       alert("Auto login failed, Please try mannualy.")
 
-          return;
-      }
-      let answer = confirm(
-        `We are trying to login with this ${passcode} passcode?`,
-        false
-      );
-      if (answer) {
-        this.$store.dispatch("autoLoginAction");
+    //       return;
+    //   }
+    //   let answer = confirm(
+    //     `We are trying to login with this ${passcode} passcode?`,
+    //     false
+    //   );
+    //   if (answer) {
+    //     this.$store.dispatch("autoLoginAction");
 
-        this.$router.push("/list");
-      } else {
-        return;
-      }
-    },
+    //     this.$router.push("/list");
+    //   } else {
+    //     return;
+    //   }
+    // },
   },
 };
 </script>

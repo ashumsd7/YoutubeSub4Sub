@@ -2,17 +2,18 @@
    <div class="row">
   
      <h4 class="heading2 text-center mt-2">  Requests List for subscribtions </h4>
+    
+     <small class="text-center">Subscribe these channels and help and win points. <strong class="d-block">Total Point: {{totoalSubscribed }}</strong> </small>
      <hr>
-     <small class="text-center">Subscribe these channels and help and win points.</small>
-     <small class="ms-auto" > Showing {{getAllLinks.length}} /40 Requests</small>
+     <small class="ms-auto text-center" > Showing {{getAllLinks.length}} /40 Requests</small>
 
-     <strong>Total Point: {{totoalSubscribed }}</strong>
+
        <table class="table ">
   <thead>
     <tr>
-      <th class="text-center" scope="col">#S.No.</th>
-      <th  scope="col">Links</th>
-      <th class="text-center" scope="col">Date</th>
+      <th class="text-center" scope="col">s.no.</th>
+      <th  scope="col">links received</th>
+      <th class="text-center" scope="col">requested at</th>
    
     </tr>
   </thead>
@@ -40,7 +41,10 @@
           },
           totoalSubscribed(){
             return this.$store.getters.totoalSubscribed;
-          }
+          },
+          isLoggedIn() {
+      return this.$store.getters.isLoggedIn;
+    },
          
           
          
@@ -55,14 +59,17 @@
             console.log(data);
 
             this.$store.dispatch('rewardEntryAction',data)
+            setTimeout(() => {
+              this.$router.push('/')
+            }, 2000);
           }
         },
 
-        mounted() {
-          if(!this.getAllLinks.length){
-            this.$router.push('/')
-          }
-        },
+        // mounted() {
+        //   if(!this.isLoggedIn){
+        //     this.$router.push('/')
+        //   }
+        // },
 
         filters:{
           shortLink(link){

@@ -25,6 +25,7 @@ export default new Vuex.Store({
       state.allLink = links;
     },
     UPDATE_LOGIN_ERROR_STATUS(state, status) {
+      // console.log("updating err status", status)
       state.loginError = status;
     },
     UPDATE_TOTAL_SUBSCRIBTION(state,count){
@@ -39,10 +40,17 @@ export default new Vuex.Store({
       if (!!storedUser) {
         context.dispatch("loginAction", { passcode: storedUser });
       }
+     
     },
-    logOutAction() {
+   
+    logOutAction(context) {
+      localStorage.removeItem('passcode')
       // window.location.reload();
+      context.commit("UPDATE_LOGIN_STATUS", false);
+      context.commit('UPDATE_TOTAL_SUBSCRIBTION',0)
+      context.commit("UPDATE_YOUTUBE_LINKS", []);
     },
+
     loginAction(context, payload) {
       payload.passcode = payload.passcode.toString();
       context.commit("UPDATE_USER", payload);
@@ -52,7 +60,7 @@ export default new Vuex.Store({
         )
         .then((res) => {
           if (res.data !== null) {
-            console.log(res.data);
+            // console.log(res.data);
             context.commit("UPDATE_LOGIN_STATUS", true);
             context.commit("UPDATE_LOGIN_ERROR_STATUS", false);
             localStorage.setItem("passcode", context.state.currentUserPasscode);
@@ -60,7 +68,7 @@ export default new Vuex.Store({
               passcode: context.state.currentUserPasscode,
             });
           } else {
-            console.log("errrrrrr nulll");
+            // console.log("errrrrrr nulll");
             context.commit("UPDATE_LOGIN_ERROR_STATUS", true);
           }
           // console.log(res);
@@ -89,7 +97,7 @@ export default new Vuex.Store({
           if (!res.data) {
             context.dispatch("UPDATE_LOGIN_STATUS", true);
           }
-          console.log(res);
+          // console.log(res);
         })
         .catch((err) => {
           console.log("errtr", err);
@@ -114,7 +122,7 @@ export default new Vuex.Store({
           if (!res.data) {
             context.dispatch("UPDATE_LOGIN_STATUS", true);
           }
-          console.log(res);
+          // console.log(res);
         })
         .catch((err) => {
           console.log("errtr", err);
@@ -140,12 +148,14 @@ export default new Vuex.Store({
         .then((res) => {
           if (!res.data) {
             // context.dispatch("UPDATE_LOGIN_STATUS", true);
-            alert("something went wrong")
+            alert("OOPS, Something went wrong")
           }
+          alert("Congrats! request sent successfully.")
           console.log(res);
         })
         .catch((err) => {
-          console.log("errtr", err);
+          // console.log("errtr", err);
+          alert("OOPS, There is some error.")
         });
     },
     fetchUsersPasscode(context, payload) {

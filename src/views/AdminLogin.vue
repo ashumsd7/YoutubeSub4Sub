@@ -15,7 +15,7 @@
     <p v-if="isAdminErr" class="invalidId">It seems  <strong> '{{ adminId}}'</strong>  is not an admin.</p>
    <div class="mb-3">
     <label for="exampleInputEmail1" class="form-label">Admin ID</label>
-    <input maxlength="8" v-model.trim="adminId" required type="search" placeholder="ex: admin001" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+    <input maxlength="8" v-model.trim.lazy="adminId" required type="search" placeholder="ex: admin001" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
     <div id="emailHelp" class="form-text">Enter Admin ID</div>
   </div>
   <div class="mb-3">
@@ -46,10 +46,8 @@ export default {
     onSubmit() {
         if(this.adminId!=='boomboom'){
             this.isAdminErr=true;
-            setTimeout(() => {
-                 this.isAdminErr=false;
-                 this.adminId=''
-            }, 1000);
+                 
+        
             return;
         }
       this.$store.dispatch("adminLoginAction", { passcode: this.passcode });

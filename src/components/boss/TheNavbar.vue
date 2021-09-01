@@ -43,7 +43,7 @@
       </ul>
        <ul class="navbar-nav" v-if="isLoggedIn">
          <li @click="logout" class="nav-item">
-          <a class="nav-link" aria-current="page" href="#"><span class="mt-2 badge bg-danger">logout ({{getCurrentUser }})</span> </a>
+          <a class="nav-link" aria-current="page" href="#"><span class="mt-2 badge bg-danger">logout ({{getCurrentUser |shortUser }})</span> </a>
         </li>
   
         
@@ -58,9 +58,10 @@
     export default {
     methods: {
       logout(){
-        // this.$store.dispatch('logOutAction')
+        this.$store.dispatch('logOutAction')
+         localStorage.removeItem('passcode')
         this.$router.push('/')
-        window.location.reload();
+        // window.location.reload();
       }
     },
         computed:{
@@ -71,6 +72,13 @@
             return this.$store.getters.getCurrentUser;
           },
          
+        },
+         filters:{
+          shortUser(user){
+            user= user.split('')
+            user.splice(0,user.length/2+1,'XX');
+            return user.join('')
+          }
         }
     }
 </script>

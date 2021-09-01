@@ -10,7 +10,7 @@
 <button  v-if="!isLoggedIn" type="button" class="btn btn-info"> <router-link to="/auth">Existing user? Login</router-link> </button>
  <button  v-if="isLoggedIn" type="button" class="btn btn-warning"> <router-link class="get_pass" to="/passcode">donate us</router-link> </button>
  <button  v-if="isLoggedIn" type="button" class="btn btn-info"> <router-link class="" style=color:white to="/list">your pending list</router-link> </button>
-<button  v-if="isLoggedIn" type="button" style=color:black class="btn btn-danger"> logout</button>
+<button  v-if="isLoggedIn" @click="logout" type="button" style=color:black class="btn btn-danger"> logout</button>
       </div>
     </div>
 </template>
@@ -22,6 +22,13 @@
       return this.$store.getters.isLoggedIn;
     },
    
+  },
+  methods: {
+      logout(){
+        this.$store.dispatch('logOutAction')
+        this.$router.push('/')
+        // window.location.reload();
+      }
   },
     }
 </script>
