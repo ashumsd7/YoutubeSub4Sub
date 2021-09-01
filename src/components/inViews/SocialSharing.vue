@@ -50,7 +50,9 @@ import {
   computed:{
           
            getCurrentUser(){
-            return this.$store.getters.getCurrentUser;
+           let currentUser=  this.$store.getters.getCurrentUser;
+           currentUser=(currentUser*1997)
+           return currentUser;
           },
           prepareLink(){
               return 'https://getsub4sub.netlify.app/entry/'

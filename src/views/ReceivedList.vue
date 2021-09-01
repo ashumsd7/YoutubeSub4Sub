@@ -1,9 +1,10 @@
 <template>
    <div class="row">
   
-     <small class="heading"> > Requests List for subscribtions :</small>
-     <small  class="heading">>Subscribe These channels and help them.</small>
-     <small class="heading"> >Showing {{getAllLinks.length}} /40 Requests</small>
+     <h4 class="heading2 text-center mt-2">  Requests List for subscribtions </h4>
+     <hr>
+     <small class="text-center">Subscribe these channels and help and win points.</small>
+     <small class="ms-auto" > Showing {{getAllLinks.length}} /40 Requests</small>
 
      <strong>Total Point: {{totoalSubscribed }}</strong>
        <table class="table ">
@@ -18,7 +19,7 @@
   <tbody>
     <tr v-for="item in getAllLinks" :key="item.id">
       <td class="text-center" scope="row"><span class="badge bg-dark">{{item.id}} </span></td>
-      <td @click="rewardIt(item.links)"><a target="_blank" :href="item.links">  {{ item.links}}</a></td>
+      <td @click="rewardIt(item.links)"><a class="links" target="_blank" :href="item.links">  {{ item.links | shortLink}}</a></td>
       <td class="text-center"><small>{{ item.date}}</small></td>
     
     </tr>
@@ -62,17 +63,28 @@
             this.$router.push('/')
           }
         },
+
+        filters:{
+          shortLink(link){
+            link= link.split('')
+            link.splice(3,link.length/2,'****');
+            console.log(link);
+            return link.join('')
+          }
+        }
     }
 </script>
 
 <style  scoped>
 
-
+td a{
+  font-size: .7rem;
+}
 .table{
-    padding: 1rem;
+    /* padding: 1rem; */
 }
 th{
-    margin-left: 20px;
+    /* margin-left: 20px; */
 }
 tr th{
     background: rgb(252, 180, 121);
@@ -93,5 +105,13 @@ td:last-child{
     font-size: 1.2rem;
     color: rgb(250, 60, 60);
     font-weight: 500;
+    font-family: 'Roboto', sans-serif;
 }
+.heading2{
+    /* font-size: 1.2rem; */
+    color: rgb(250, 60, 60);
+    font-weight: 500;
+    font-family: 'Roboto', sans-serif;
+}
+
 </style>

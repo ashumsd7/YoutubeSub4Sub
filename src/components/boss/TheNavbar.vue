@@ -28,9 +28,9 @@
           <router-link class="nav-link" to="/admin">admin </router-link>
         </li>
         
-         <li v-if="isLoggedIn" class="nav-item">
+         <!-- <li v-if="isLoggedIn" class="nav-item">
           <router-link class="nav-link" to="/entry/1123"> entry</router-link>
-        </li>
+        </li> -->
          
         <li class="nav-item">
           <router-link class="nav-link" to="/donate">donate</router-link>
@@ -77,6 +77,6 @@
 
 <style  scoped>
 .bg-dark {
-    background: linear-gradient(230deg,#396cf8 ,rgb(82, 67, 245)) !important;
+    background: linear-gradient(230deg,#769bff ,rgb(142, 71, 223)) !important;
 }
 </style>

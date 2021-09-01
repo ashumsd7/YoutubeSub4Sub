@@ -9,6 +9,7 @@
     <button v-if="!isLoggedIn" type="button" class="btn btn-warning"> <router-link class="get_pass" to="/passcode">get passcode</router-link> </button>
 <button  v-if="!isLoggedIn" type="button" class="btn btn-info"> <router-link to="/auth">Existing user? Login</router-link> </button>
  <button  v-if="isLoggedIn" type="button" class="btn btn-warning"> <router-link class="get_pass" to="/passcode">donate us</router-link> </button>
+ <button  v-if="isLoggedIn" type="button" class="btn btn-info"> <router-link class="" style=color:white to="/list">your pending list</router-link> </button>
 <button  v-if="isLoggedIn" type="button" style=color:black class="btn btn-danger"> logout</button>
       </div>
     </div>

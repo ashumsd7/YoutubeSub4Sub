@@ -79,12 +79,22 @@ export default {
     isLoggedIn() {
       return this.$store.getters.isLoggedIn;
     },
+
   },
+  
   
   created() {
     this.requestedID = this.$route.params.id;
+    alert( this.requestedID)
+    
+     this.requestedID=  this.requestedID/1997;
+     console.log("received ID is",  this.requestedID)
     this.showReqID = this.$route.params.id;
-    this.showReqID=(this.showReqID*1997).toString(8) 
+    // this.showReqID=(this.showReqID*1997).toString(8) 
+    this.showReqID= this.showReqID.split('')
+             this.showReqID.splice(1, this.showReqID.length/2,'#$%&!#$');
+             this.showReqID = this.showReqID.join('')
+            
   },
   //   beforeRouteEnter (to, from, next) {
   //       if(!this.isLoggedIn){

@@ -16,16 +16,12 @@ export default {
 }
 </script>
 <style lang="scss">
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap');
 
 *{
   overflow-x: hidden;
 }
-.row{
-    margin-top: 20vh;
-    margin-left: 10%;
-    margin-right: 10%;
-    
-}
+
 .router-link-exact-active{
   color: rgb(248, 123, 123) !important;
   font-weight: bolder;
