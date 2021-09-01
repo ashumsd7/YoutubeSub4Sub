@@ -3,6 +3,8 @@
      <small class="heading"> > Requests List for subscribtions :</small>
      <small  class="heading">>Subscribe These channels and help them.</small>
      <small class="heading"> >Showing {{getAllLinks.length}} /40 Requests</small>
+
+     <strong>Total Point: {{totoalSubscribed }}</strong>
        <table class="table ">
   <thead>
     <tr>
@@ -15,7 +17,7 @@
   <tbody>
     <tr v-for="item in getAllLinks" :key="item.id">
       <td class="text-center" scope="row"><span class="badge bg-dark">{{item.id}} </span></td>
-      <td><a :href="item.links">  {{ item.links}}</a></td>
+      <td @click="rewardIt(item.links)"><a target="_blank" :href="item.links">  {{ item.links}}</a></td>
       <td class="text-center"><small>{{ item.date}}</small></td>
     
     </tr>
@@ -32,9 +34,30 @@
           getAllLinks(){
             return this.$store.getters.getAllLinks.reverse();
           },
+          totoalSubscribed(){
+            return this.$store.getters.totoalSubscribed;
+          }
          
           
          
+        },
+        methods: {
+          rewardIt(link){
+           let data= {
+              clcikedURL:link,
+              timeStamp:+ new Date()
+            }
+
+            console.log(data);
+
+            this.$store.dispatch('rewardEntryAction',data)
+          }
+        },
+
+        mounted() {
+          if(!this.getAllLinks.length){
+            this.$router.push('/')
+          }
         },
     }
 </script>
