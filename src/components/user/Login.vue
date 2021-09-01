@@ -85,6 +85,11 @@ export default {
     },
     autoLogin() {
       let passcode = localStorage.getItem("passcode");
+      if(!passcode){
+          alert("Auto login failed, Please try mannualy.")
+
+          return;
+      }
       let answer = confirm(
         `We are trying to login with this ${passcode} passcode?`,
         false
