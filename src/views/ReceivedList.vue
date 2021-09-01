@@ -3,9 +3,12 @@
   
      <h4 class="heading2 text-center mt-2">  Requests List for subscribtions </h4>
     
-     <small class="text-center">Subscribe these channels and help and win points. <strong class="d-block">Total Point: {{totoalSubscribed }}</strong> </small>
+     <small class="text-center">Subscribe these channels and help and win points. 
+       <strong class="d-block">Total Points: {{totoalSubscribed }}/40*</strong> </small>
+       <small class="text-center"> 1 point = ₹1</small>
+       <small class="text-center text-danger">After 40 points you will require a premium subscribtion of sub4sub.</small>
      <hr>
-     <small class="ms-auto text-center" > Showing {{getAllLinks.length}} /40 Requests</small>
+     <small  class="ms-auto text-center " > Showing {{getAllLinks.length}}  Requests</small>
 
 
        <table class="table ">
