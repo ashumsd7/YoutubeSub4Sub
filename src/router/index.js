@@ -6,6 +6,7 @@ import MakeEntry from '../views/MakeEntry.vue'
 import Login from '../components/user/Login.vue'
 import ReceivedList from '../views/ReceivedList.vue'
 import Donate from '../views/Donate.vue'
+import RequestPasscode from '../views/RequestPasscode.vue'
 
 Vue.use(VueRouter)
 
@@ -39,6 +40,11 @@ Vue.use(VueRouter)
   path: '/donate',
 name: 'Donate',
 component: Donate
+},
+{
+  path: '/passcode',
+name: 'Passcode',
+component: RequestPasscode
 },
 
 ]

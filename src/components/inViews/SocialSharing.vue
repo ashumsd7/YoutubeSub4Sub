@@ -2,7 +2,7 @@
     <div class="sharing mt-5">
         <div class="row">
             <div class="heading text-center">
-                Share your link to help others.
+                Share your link and app to help others.
             </div>
         </div>
         <hr>
@@ -99,5 +99,11 @@ a {
     color: rgb(114, 109, 109);
     font-family: 'Roboto', sans-serif;
     /* padding: 0 3rem; */
+}
+
+@media screen and (min-width:900px) {
+    .row{
+        padding: 0 5rem;
+    }
 }
 </style>

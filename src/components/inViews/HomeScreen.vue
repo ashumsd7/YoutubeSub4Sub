@@ -6,21 +6,28 @@
       </div>
       <div class="col-lg-4">
  <img width="350" height="350" src="https://cdn.dribbble.com/users/287797/screenshots/2406073/watch_me.gif" alt="" class="img-fluid">
-    <button type="button" class="btn btn-warning">get passcode</button>
-<button type="button" class="btn btn-info"> <router-link to="/auth">Existing user? Login</router-link> </button>
+    <button v-if="!isLoggedIn" type="button" class="btn btn-warning"> <router-link class="get_pass" to="/passcode">get passcode</router-link> </button>
+<button  v-if="!isLoggedIn" type="button" class="btn btn-info"> <router-link to="/auth">Existing user? Login</router-link> </button>
+ <button  v-if="isLoggedIn" type="button" class="btn btn-warning"> <router-link class="get_pass" to="/passcode">donate us</router-link> </button>
+<button  v-if="isLoggedIn" type="button" style=color:black class="btn btn-danger"> logout</button>
       </div>
     </div>
 </template>
 
 <script>
     export default {
-        
+         computed: {
+    isLoggedIn() {
+      return this.$store.getters.isLoggedIn;
+    },
+   
+  },
     }
 </script>
 
 <style  scoped>
 .row{
-    margin-top: 10vh;
+    margin-top: 4vh;
     margin-left: 10%;
     margin-right: 10%;
     
@@ -46,4 +53,15 @@ a{
     text-decoration: rgb(251, 255, 6);
     color: rgb(255, 255, 67);
 }
+a.get_pass{
+    color: black;
+}
+img{
+       transition: 1s; 
+}
+img:hover{
+
+    transform: rotateY(180deg);
+}
+
 </style>

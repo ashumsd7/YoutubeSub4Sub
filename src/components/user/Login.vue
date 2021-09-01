@@ -13,7 +13,7 @@
 
       <div class="col-lg-5">
         <form @submit.prevent="onSubmit">
-          <strong class="heading">User Login aazad</strong>
+          <strong class="heading">User Login </strong>
           <hr />
           <div v-if="isLoginError" id="invalidText" class="form-text">
             {{ passcode }} is not a valid passcode.
@@ -41,16 +41,16 @@
             </div>
           </div>
 
-          <button type="submit" class="btn btn-primary mb-2">Login</button>
+          <button type="submit" class="btn btn-primary mb-2 login_btn">Login</button>
         </form>
-        <button
+        <a
           type="submit"
           @click="autoLogin"
-          class="btn btn-success auto-login"
+          class=" auto-login"
         >
-          Auto Login
-        </button>
-        <p class="request_text">Request for a Passcode ?</p>
+         Try auto login
+        </a>
+        <p class="request_text mr-2"> <router-link to="/passcode">Request for a Passcode ?</router-link> </p>
       </div>
 
       <div class="col-lg-2"></div>
@@ -108,7 +108,7 @@ export default {
 
 <style  scoped>
 .row {
-  margin-top: 10vh;
+  margin-top: 8vh;
   margin-left: 10%;
   margin-right: 10%;
 }
@@ -133,4 +133,5 @@ label {
     color: rgb(252, 103, 103);
     font-weight: bold;
 }
+
 </style>
