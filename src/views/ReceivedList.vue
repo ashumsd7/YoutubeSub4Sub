@@ -42,7 +42,7 @@
 <style  scoped>
 
 .row{
-    margin-top: 20vh;
+    /* margin-top: vh; */
 }
 .table{
     padding: 1rem;

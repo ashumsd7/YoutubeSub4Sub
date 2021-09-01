@@ -60,7 +60,7 @@ export default {
 
 <style  scoped>
 .row{
-    margin-top: 12vh;
+    margin-top: 10vh;
     margin-left: 10%;
     margin-right: 10%;
     

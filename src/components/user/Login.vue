@@ -88,7 +88,7 @@
 
 <style  scoped>
 .row{
-    margin-top: 22vh;
+    margin-top: 10vh;
     margin-left: 10%;
     margin-right: 10%;
     

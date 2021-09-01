@@ -1,6 +1,6 @@
 <template>
     <section id="header">
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark ">
   <div class="container">
     <a class="navbar-brand" href="#">
         <img class="img-fluid" width="100" height="100" src="../../assets/ytlogo.png" alt="">  
@@ -59,6 +59,7 @@
     methods: {
       logout(){
         this.$store.dispatch('logOutAction')
+        this.$router.push('/')
       }
     },
         computed:{
