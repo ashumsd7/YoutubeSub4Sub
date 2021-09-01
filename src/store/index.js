@@ -6,7 +6,7 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    currentUserPasscode: "",
+    currentUserPasscode: undefined,
     isLoggedIn: false,
     allUsers: [],
     allLink: [],
