@@ -41,9 +41,7 @@
 
 <style  scoped>
 
-.row{
-    /* margin-top: vh; */
-}
+
 .table{
     padding: 1rem;
 }

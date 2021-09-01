@@ -5,7 +5,7 @@
         <img
           src="../assets/people.png"
           alt=""
-          class="img-fluid  mt-5"
+          class="img-fluid  mt-5 feature-img"
           width="300"
           height="300"
           srcset=""

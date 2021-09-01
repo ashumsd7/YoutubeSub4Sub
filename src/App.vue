@@ -30,4 +30,10 @@ export default {
   color: rgb(248, 123, 123) !important;
   font-weight: bolder;
 }
+
+@media screen and (max-width:950px) {
+  .feature-img{
+    display: none;
+  }
+}
 </style>

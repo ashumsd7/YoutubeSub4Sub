@@ -3,7 +3,7 @@
     <div class="row">
 
         
-    <div class="col-lg-6">
+    <div class="col-lg-6 feature-img ">
         <img src="../assets/admin.png" alt="" class="img-fluid p-3 mt-5" width="300" height="300" srcset="">
     </div>
      <div class="col-lg-5 mt-3">

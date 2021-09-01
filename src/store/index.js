@@ -10,6 +10,7 @@ export default new Vuex.Store({
     isLoggedIn:false,
     allUsers: [],
     allLink: [],
+    loginError:false
     
     
   },
@@ -22,6 +23,9 @@ export default new Vuex.Store({
     },
      UPDATE_YOUTUBE_LINKS(state,links) {
       state.allLink= links
+    },
+    UPDATE_LOGIN_ERROR_STATUS(state,status) {
+      state.loginError= status
     }
   },
   actions: {
@@ -47,11 +51,17 @@ export default new Vuex.Store({
           if (res.data !== null) {
             console.log(res.data);
             context.commit('UPDATE_LOGIN_STATUS', true);
+            context.commit('UPDATE_LOGIN_ERROR_STATUS', false);
             localStorage.setItem('passcode', context.state.currentUserPasscode);
             context.dispatch('fetchUsersPasscode',{passcode:context.state.currentUserPasscode})
           }
+          else{ 
+            console.log("errrrrrr nulll");
+            context.commit('UPDATE_LOGIN_ERROR_STATUS', true);
+          }
         // console.log(res);
         }).catch(err => {
+          context.commit('UPDATE_LOGIN_ERROR_STATUS', true);
         console.log(err);
       })
     },
@@ -132,6 +142,9 @@ export default new Vuex.Store({
     },
     getAllLinks(state){
       return state.allLink;
+    },
+    isLoginError(state){
+      return state.loginError;
     }
     
  }
