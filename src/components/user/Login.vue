@@ -13,7 +13,7 @@
 
       <div class="col-lg-5">
         <form @submit.prevent="onSubmit">
-          <strong class="heading">User Login </strong>
+          <strong class="heading">User Login aazad</strong>
           <hr />
           <div v-if="isLoginError" id="invalidText" class="form-text">
             {{ passcode }} is not a valid passcode.
