@@ -1,5 +1,6 @@
 <template>
    <div class="row">
+  
      <small class="heading"> > Requests List for subscribtions :</small>
      <small  class="heading">>Subscribe These channels and help them.</small>
      <small class="heading"> >Showing {{getAllLinks.length}} /40 Requests</small>
@@ -29,7 +30,9 @@
 </template>
 
 <script>
+
     export default {
+
         computed:{
           getAllLinks(){
             return this.$store.getters.getAllLinks.reverse();

@@ -2,12 +2,12 @@
     <div class="sharing mt-5">
         <div class="row">
             <div class="heading text-center">
-                Share your link to help others. {{getCurrentUser}}
+                Share your link to help others.
             </div>
         </div>
         <hr>
         <div class="row">
-            <p class="sharing-about text-center px-5">
+            <p class="sharing-about text-center px-3">
                 When other people open your link they will submit their channel links and those links will appear in your  <router-link to="/list" >list</router-link>. You will subscribe those channels and earn points.
                 
             </p>
@@ -98,6 +98,6 @@ a {
     font-size: 1.1rem;
     color: rgb(114, 109, 109);
     font-family: 'Roboto', sans-serif;
-    padding: 0 3rem;
+    /* padding: 0 3rem; */
 }
 </style>
