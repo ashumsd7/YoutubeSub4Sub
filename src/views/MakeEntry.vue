@@ -19,11 +19,11 @@
 
           <div class="mb-3">
             <label for="exampleInputEmail1" class="form-label"
-              >Request to</label
+              >Request to </label
             >
             <input
               maxlength="8"
-              v-model.trim="requestedID"
+              v-model.trim="showReqID"
                required
               :readonly='isReadonly'
               @dblclick="makeEditable"
@@ -71,7 +71,8 @@ export default {
       link: null,
       requestedID: null,
       isURLError: false,
-      isReadonly:true
+      isReadonly:true,
+      showReqID:null
     };
   },
   computed: {
@@ -79,8 +80,11 @@ export default {
       return this.$store.getters.isLoggedIn;
     },
   },
+  
   created() {
     this.requestedID = this.$route.params.id;
+    this.showReqID = this.$route.params.id;
+    this.showReqID=(this.showReqID*1997).toString(8) 
   },
   //   beforeRouteEnter (to, from, next) {
   //       if(!this.isLoggedIn){
