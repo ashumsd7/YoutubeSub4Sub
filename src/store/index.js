@@ -37,7 +37,7 @@ export default new Vuex.Store({
       
     },
     logOutAction() {
-      window.location.reload();
+      // window.location.reload();
     },
     loginAction(context, payload) {
         payload.passcode = payload.passcode.toString();

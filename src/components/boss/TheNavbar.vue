@@ -58,8 +58,9 @@
     export default {
     methods: {
       logout(){
-        this.$store.dispatch('logOutAction')
+        // this.$store.dispatch('logOutAction')
         this.$router.push('/')
+        window.location.reload();
       }
     },
         computed:{
