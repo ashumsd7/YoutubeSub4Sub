@@ -18,7 +18,8 @@ export default new Vuex.Store({
     maxPoint: 40,
     uniqueKey: "",
 
-    totalSubscribtion: 0,
+    sharedUniqueKey:'',
+    sharedPasscode:''
   },
   mutations: {
     UPDATE_USER(state, payload) {
@@ -46,9 +47,18 @@ export default new Vuex.Store({
     UPDATE_UNIQUE_KEY(state, key) {
       state.uniqueKey = key;
     },
+    //push in clicled links
     UPDATE_CLICKED_URL(state, data) {
       state.clickedURLs.push(data);
       console.log(state.clickedURLs);
+    },
+    //push in req links
+   ADD_YOUTUBE_LINKS(state, data) {
+      state.requestedURLs.push(data)
+    },
+    UPDATE_SHARED_DATA(state, payload) {
+      state.sharedPasscode= payload.passcode;
+      state.sharedUniqueKey= payload.unique_key
     },
   },
   actions: {
@@ -127,28 +137,65 @@ export default new Vuex.Store({
         });
     },
 
+
+    prepareEntryAction(context,payload){
+      // console.log("fired");
+      // console.log(payload);
+      let user = payload.passcode.toString();
+      axios
+      .get(
+        `https://sub4sub-cb7f9-default-rtdb.firebaseio.com/${user}.json`,
+        
+      )
+      .then((res) => {
+        // if (!res.data) {
+        //   // context.dispatch("UPDATE_LOGIN_STATUS", true);
+        // }
+        let unique_key = Object.keys(res.data)[0];
+        context.commit('UPDATE_SHARED_DATA',{ passcode: user, unique_key:unique_key})
+       
+      })
+      .catch((err) => {
+        console.log("errtr", err);
+      });
+    },
+
     makeEntryAction(context, payload) {
       payload.passcode = payload.passcode.toString();
 
-      let data;
+      // let data;
 
-      data = { url: payload.link, date: new Date().toLocaleString() };
+      // data = { url: payload.link, date: new Date().toLocaleString() };
 
       let user = payload.passcode.toString();
 
+      context.commit("ADD_YOUTUBE_LINKS", {
+        url: payload.url,
+        clickedAt: payload.timeStamp,
+      });
+
+      let data = {
+        requestedURLs: context.state.requestedURLs,
+        maxPoint: context.getters.getMaxPoints,
+        isPro: context.getters.getProStatus,
+        clickedURLs: context.state.clickedURLs,
+
+      };
+      let sharedUser= context.state.sharedPasscode;
+      let uniqueKey= context.state.sharedUniqueKey;
       axios
-        .post(
-          `https://sub4sub-cb7f9-default-rtdb.firebaseio.com/${user}.json`,
+        .put(
+          `https://sub4sub-cb7f9-default-rtdb.firebaseio.com/${sharedUser}/${uniqueKey}.json`,
           data
         )
-        .then((res) => {
-          if (!res.data) {
-            context.dispatch("UPDATE_LOGIN_STATUS", true);
-          }
-          // console.log(res);
+        .then((response) => {
+          // console.log("sucesssss");
+          alert("You are Rewarded :)")
+          // console.log(response);
         })
-        .catch((err) => {
-          console.log("errtr", err);
+        .catch((error) => {
+          alert("Something Went Wrong :(")
+          // console.log(error);
         });
     },
 

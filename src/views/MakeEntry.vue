@@ -126,6 +126,9 @@ export default {
         this.isReadonly=false
     }
   },
+  mounted() {
+    this.$store.dispatch('prepareEntryAction',{passcode:this.requestedID})
+  },
 };
 </script>
 
