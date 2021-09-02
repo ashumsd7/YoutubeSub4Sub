@@ -103,10 +103,10 @@ export default new Vuex.Store({
       let data;
 
       data = {
-        requestedURLs: [{ url: "google", requestedAt: "req1/2/3" }],
+        requestedURLs: [],
         maxPoint: 40,
         isPro: false,
-        clickedURLs: [{ url: "cliked url", clickedAt: "1/2/3" }],
+        clickedURLs: [],
       };
 
       let user = context.state.currentUserPasscode.toString();
