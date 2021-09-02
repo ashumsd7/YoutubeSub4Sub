@@ -43,7 +43,7 @@
       </ul>
        <ul class="navbar-nav" v-if="isLoggedIn">
          <li @click="logout" class="nav-item">
-          <a class="nav-link" aria-current="page" href="#"><span class="mt-2 badge bg-danger">logout ({{getCurrentUser |shortUser }})</span> </a>
+          <a class="nav-link" aria-current="page" href="#"><span class="mt-2 badge bg-danger">logout ({{getCurrentUser  }})</span> </a>
         </li>
   
         
@@ -73,13 +73,13 @@
           },
          
         },
-         filters:{
-          shortUser(user){
-            user= user.split('')
-            user.splice(0,user.length/2+1,'XX');
-            return user.join('')
-          }
-        }
+        //  filters:{
+        //   shortUser(user){
+        //     user= user.split('')
+        //     user.splice(0,user.length/2+1,'XX');
+        //     return user.join('')
+        //   }
+        // }
     }
 </script>
 

@@ -4,7 +4,7 @@
           
              <li :key="links.title" v-for="links in quickLinks" class="mx-2"> <router-link :to=links.to > {{links.title}}</router-link></li>
          <li @click="logout" v-if="isLoggedIn" >
-          <a  class="nav-link" aria-current="page">logout ({{getCurrentUser | shortUser }})</a>
+          <a  class="nav-link" aria-current="page">logout ({{getCurrentUser }})</a>
         </li>
         <li  v-if="!isLoggedIn" >
           <router-link  to="/auth"> login </router-link>
@@ -43,13 +43,13 @@
         // window.location.reload();
       }
     },
-     filters:{
-          shortUser(user){
-            user= user.split('')
-            user.splice(0,user.length/2,'XX');
-            return user.join('')
-          }
-        }
+    //  filters:{
+    //       shortUser(user){
+    //         user= user.split('')
+    //         user.splice(0,user.length/2,'XX');
+    //         return user.join('')
+    //       }
+    //     }
     }
 </script>
 

@@ -12,7 +12,13 @@ export default new Vuex.Store({
     allLink: [],
     loginError: false,
 
-    totalSubscribtion:0
+    requestedURLs: [],
+    clickedURLs: [],
+    isPro: false,
+    maxPoint: 40,
+    uniqueKey: "",
+
+    totalSubscribtion: 0,
   },
   mutations: {
     UPDATE_USER(state, payload) {
@@ -22,15 +28,28 @@ export default new Vuex.Store({
       state.isLoggedIn = status;
     },
     UPDATE_YOUTUBE_LINKS(state, links) {
-      state.allLink = links;
+      state.requestedURLs = links;
+    },
+
+    UPDATE_TOTAL_SUBSCRIBTION(state, links) {
+      state.clickedURLs = links;
+    },
+    UPDATE_MAX_POINTS(state, points) {
+      state.maxPoint = points;
+    },
+    UPDATE_PRO_STATUS(state, status) {
+      state.isPro = status;
     },
     UPDATE_LOGIN_ERROR_STATUS(state, status) {
-      // console.log("updating err status", status)
       state.loginError = status;
     },
-    UPDATE_TOTAL_SUBSCRIBTION(state,count){
-      state.totalSubscribtion=count
-    }
+    UPDATE_UNIQUE_KEY(state, key) {
+      state.uniqueKey = key;
+    },
+    UPDATE_CLICKED_URL(state, data) {
+      state.clickedURLs.push(data);
+      console.log(state.clickedURLs);
+    },
   },
   actions: {
     updateUserAction() {},
@@ -40,14 +59,13 @@ export default new Vuex.Store({
       if (!!storedUser) {
         context.dispatch("loginAction", { passcode: storedUser });
       }
-     
     },
-   
+
     logOutAction(context) {
-      localStorage.removeItem('passcode')
+      localStorage.removeItem("passcode");
       // window.location.reload();
       context.commit("UPDATE_LOGIN_STATUS", false);
-      context.commit('UPDATE_TOTAL_SUBSCRIBTION',0)
+      context.commit("UPDATE_TOTAL_SUBSCRIBTION", 0);
       context.commit("UPDATE_YOUTUBE_LINKS", []);
     },
 
@@ -84,7 +102,12 @@ export default new Vuex.Store({
       context.commit("UPDATE_USER", payload);
       let data;
 
-      data = { url: "https://google.co.in" };
+      data = {
+        requestedURLs: [{ url: "google", requestedAt: "req1/2/3" }],
+        maxPoint: 40,
+        isPro: false,
+        clickedURLs: [{ url: "cliked url", clickedAt: "1/2/3" }],
+      };
 
       let user = context.state.currentUserPasscode.toString();
 
@@ -130,32 +153,34 @@ export default new Vuex.Store({
     },
 
     rewardEntryAction(context, payload) {
-      // payload.passcode = payload.passcode.toString();
+      // console.log("this is ",payload);
+      context.commit("UPDATE_CLICKED_URL", {
+        url: payload.url,
+        clickedAt: payload.timeStamp,
+      });
 
-      let data;
+      let data = {
+        requestedURLs: context.state.requestedURLs,
+        maxPoint: context.getters.getMaxPoints,
+        isPro: context.getters.getProStatus,
+        clickedURLs: context.state.clickedURLs,
 
-      // data = { url: payload.link, date: new Date().toLocaleString() };
-      data=
-        {clcikedURL:payload.clcikedURL,
-        clickedAt:payload.timeStamp}
-      let user = context.state.currentUserPasscode.toString();
-
+      };
+      let currentUser= context.getters.getCurrentUser;
+      let uniqueKey= context.getters.getUniqueKey;
       axios
-        .post(
-          `https://sub4sub-cb7f9-default-rtdb.firebaseio.com/${user}.json`,
+        .put(
+          `https://sub4sub-cb7f9-default-rtdb.firebaseio.com/${currentUser}/${uniqueKey}.json`,
           data
         )
-        .then((res) => {
-          if (!res.data) {
-            // context.dispatch("UPDATE_LOGIN_STATUS", true);
-            alert("OOPS, Something went wrong")
-          }
-          alert("Congrats! request sent successfully.")
-          console.log(res);
+        .then((response) => {
+          // console.log("sucesssss");
+          alert("You are Rewarded :)")
+          // console.log(response);
         })
-        .catch((err) => {
-          // console.log("errtr", err);
-          alert("OOPS, There is some error.")
+        .catch((error) => {
+          alert("Something Went Wrong :(")
+          // console.log(error);
         });
     },
     fetchUsersPasscode(context, payload) {
@@ -165,31 +190,26 @@ export default new Vuex.Store({
         )
         .then((res) => {
           let fetchedLinks = res.data;
-          console.log(fetchedLinks);
-          let fetchedLinkArray = [];
-          let clickedURLs=[]
-          let i = 0;
-          for (let val in fetchedLinks) {
-          
-            if(fetchedLinks[val].url!==undefined){
-              fetchedLinkArray.push({
-                links: fetchedLinks[val].url,
-                id: ++i,
-                date: fetchedLinks[val].date,
-              });
-            }
-            
-            if(fetchedLinks[val].clcikedURL!==undefined){
-              
-              clickedURLs.push({clickedURL:fetchedLinks[val].clcikedURL})
-            }
-          }
-          context.commit('UPDATE_TOTAL_SUBSCRIBTION',clickedURLs.length)
+          // console.log(Object.keys(fetchedLinks)[0]);
+          //val is unique key
+          let val = Object.keys(fetchedLinks)[0];
 
-      
+          // console.log("unique Key",val);
+          let unique_key = val;
+          // console.log("all reqURLS", fetchedLinks[val].requestedURLs);
+          let requestedURLs = fetchedLinks[val].requestedURLs;
+          // console.log("all cliked", fetchedLinks[val].clickedURLs);
+          let clickedURLs = fetchedLinks[val].clickedURLs;
+          // console.log("is Pro", fetchedLinks[val].isPro);
+          let isPro = fetchedLinks[val].isPro;
+          // console.log("max points", fetchedLinks[val].maxPoint);
+          let maxPoint = fetchedLinks[val].maxPoint;
 
-
-          context.commit("UPDATE_YOUTUBE_LINKS", fetchedLinkArray);
+          context.commit("UPDATE_TOTAL_SUBSCRIBTION", clickedURLs);
+          context.commit("UPDATE_YOUTUBE_LINKS", requestedURLs);
+          context.commit("UPDATE_MAX_POINTS", maxPoint);
+          context.commit("UPDATE_PRO_STATUS", isPro);
+          context.commit("UPDATE_UNIQUE_KEY", unique_key);
         })
         .catch((err) => {
           console.log(err);
@@ -204,13 +224,22 @@ export default new Vuex.Store({
       return state.currentUserPasscode;
     },
     getAllLinks(state) {
-      return state.allLink;
+      return state.requestedURLs;
     },
     isLoginError(state) {
       return state.loginError;
     },
-    totoalSubscribed(state){
-      return state.totalSubscribtion;
-    }
+    allSubscribedLinks(state) {
+      return state.clickedURLs;
+    },
+    getProStatus(state) {
+      return state.isPro;
+    },
+    getMaxPoints(state) {
+      return state.maxPoint;
+    },
+    getUniqueKey(state) {
+      return state.uniqueKey;
+    },
   },
 });

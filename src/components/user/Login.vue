@@ -32,7 +32,7 @@
               v-model.trim.lazy.number="passcode"
               placeholder="ex: 1234567890"
               required
-              type="search"
+              type="number"
               class="form-control"
               id="exampleInputPassword1"
             />
