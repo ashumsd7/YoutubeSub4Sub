@@ -43,7 +43,7 @@
       </ul>
        <ul class="navbar-nav" v-if="isLoggedIn">
          <li @click="logout" class="nav-item">
-          <a class="nav-link" aria-current="page" href="#"><span class="mt-2 badge bg-danger">logout ({{getCurrentUser  }})</span> </a>
+          <a class="nav-link" aria-current="page" href="#"><span class="mt-2 badge bg-danger">logout> ({{getCurrentUser  }})</span> </a>
         </li>
   
         
