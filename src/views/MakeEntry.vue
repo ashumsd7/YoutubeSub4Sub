@@ -107,6 +107,7 @@ export default {
         this.$store.dispatch("makeEntryAction", {
           passcode: this.requestedID,
           link: this.link,
+          date:new Date().toLocaleString() 
         });
       } else {
         this.isURLError = true;

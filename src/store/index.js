@@ -152,6 +152,7 @@ export default new Vuex.Store({
         //   // context.dispatch("UPDATE_LOGIN_STATUS", true);
         // }
         let unique_key = Object.keys(res.data)[0];
+        console.log("shared user is", user);
         context.commit('UPDATE_SHARED_DATA',{ passcode: user, unique_key:unique_key})
        
       })
@@ -161,6 +162,7 @@ export default new Vuex.Store({
     },
 
     makeEntryAction(context, payload) {
+      console.log("payload requested making entry", payload);
       payload.passcode = payload.passcode.toString();
 
       // let data;
@@ -170,8 +172,8 @@ export default new Vuex.Store({
       let user = payload.passcode.toString();
 
       context.commit("ADD_YOUTUBE_LINKS", {
-        url: payload.url,
-        clickedAt: payload.timeStamp,
+        url: payload.link,
+        requestedAt: payload.date,
       });
 
       let data = {
@@ -190,11 +192,11 @@ export default new Vuex.Store({
         )
         .then((response) => {
           // console.log("sucesssss");
-          alert("You are Rewarded :)")
+          alert("You have successfully requested :)")
           // console.log(response);
         })
         .catch((error) => {
-          alert("Something Went Wrong :(")
+          alert("Something Went Wrong :( while requesting")
           // console.log(error);
         });
     },
