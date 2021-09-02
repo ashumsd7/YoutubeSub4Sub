@@ -15,7 +15,7 @@
         <form @submit.prevent="onSubmit">
           <strong class="heading">User Login </strong>
           <hr />
-          <div v-if="isLoginError" id="invalidText" class="form-text">
+          <div v-if="isError" id="invalidText" class="form-text">
             {{ passcode }} is not a valid passcode.
           </div>
           <!-- <div class="mb-3">
@@ -31,7 +31,8 @@
               maxlength="10"
               v-model.trim.lazy.number="passcode"
               placeholder="ex: 1234567890"
-              required
+              required 
+             
               type="number"
               class="form-control"
               id="exampleInputPassword1"
@@ -72,6 +73,7 @@ export default {
   data() {
     return {
       passcode: null,
+      isError:this.isLoginError
     };
   },
   methods: {
@@ -83,6 +85,11 @@ export default {
       }
      }, 2000);
     },
+    clearInput(){
+      alert("focused")
+      this.isError= false;
+
+    }
     // autoLogin() {
     //   let passcode = localStorage.getItem("passcode");
     //   if(!passcode){

@@ -1,47 +1,96 @@
 <template>
   <div class="row">
-    <h4 class="heading2 text-center mt-2">Requests List for subscribtions</h4>
+    <!-- <h2 v-if="!!getAllLinks.length || !!allSubscribedLinks.length ">No Data Found</h2> -->
+    <div @click="switchStatus=!switchStatus"  class="btn btn-warning">{{switchStatus? 'SWICTH TO CLICKED LIST' : 'SWICTH TO REQUEST LIST'}}</div>
+    <div v-if="switchStatus" class="">
+      <h4 class="heading2 text-center mt-2">Requests List for subscribtions</h4>
 
-    <small class="text-center"
-      >Subscribe these channels and help and win points.
-      <strong class="d-block"
-        >Total Points: {{ allSubscribedLinks.length }}/40*</strong
+      <small class="text-center"
+        >Subscribe these channels and help and win points.
+        <strong class="d-block"
+          >Total Points: {{ allSubscribedLinks.length }}/40*</strong
+        >
+      </small>
+      <small class="text-center"> 1 point = ₹1</small>
+      <small class="text-center text-danger"
+        >After 40 points you will require a premium subscribtion of
+        sub4sub.</small
       >
-    </small>
-    <small class="text-center"> 1 point = ₹1</small>
-    <small class="text-center text-danger"
-      >After 40 points you will require a premium subscribtion of
-      sub4sub.</small
-    >
-    <hr />
-    <small class="ms-auto text-center">
-      Showing {{ getAllLinks.length }} Requests</small
-    >
+      <hr />
+      <small class="ms-auto text-center">
+        Showing {{ getAllLinks.length }} Requests</small
+      >
 
-    <table class="table">
-      <thead>
-        <tr>
-          <th class="text-center" scope="col">s.no.</th>
-          <th scope="col">links received</th>
-          <th class="text-center" scope="col">requested at</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="(item, idx) in getAllLinks" :key="item.idx">
-          <td class="text-center" scope="row">
-            <span class="badge bg-dark">{{ ++idx }} </span>
-          </td>
-          <td @click="rewardIt(item.url)">
-            <a class="links" target="_blank" :href="item.url">
-              {{ item.url | shortLink }}</a
-            >
-          </td>
-          <td class="text-center">
-            <small>{{ item.requestedAt }}</small>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+      <table class="table">
+        <thead>
+          <tr>
+            <th class="text-center" scope="col">s.no.</th>
+            <th scope="col">links received</th>
+            <th class="text-center" scope="col">requested at</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="(item, idx) in getAllLinks" :key="item.idx">
+            <td class="text-center" scope="row">
+              <span class="badge bg-dark">{{ ++idx }} </span>
+            </td>
+            <td @click="rewardIt(item.url)">
+              <a class="links" target="_blank" :href="item.url">
+                {{ item.url | shortLink }}</a
+              >
+            </td>
+            <td class="text-center">
+              <small>{{ item.requestedAt }}</small>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div v-else class="">
+      <h4 class="heading2 text-center mt-2">Cliked List for subscribtions</h4>
+
+      <small class="text-center"
+        >You have already subscribed these channels and won points.
+        <strong class="d-block"
+          >Total Points: {{ allSubscribedLinks.length }}/40*</strong
+        >
+      </small>
+      <small class="text-center"> 1 point = ₹1</small>
+      <small class="text-center text-danger"
+        >After 40 points you will require a premium subscribtion of
+        sub4sub.</small
+      >
+      <hr />
+      <!-- <small class="ms-auto text-center">
+        Showing {{ getAllLinks.length }} Requests</small
+      > -->
+
+      <table class="table">
+        <thead>
+          <tr>
+            <th class="text-center" scope="col">s.no.</th>
+            <th scope="col">links subscribed</th>
+            <!-- <th class="text-center" scope="col">requested at</th> -->
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="(item, idx) in allSubscribedLinks" :key="item.idx">
+            <td class="text-center" scope="row">
+              <span class="badge bg-dark">{{ ++idx }} </span>
+            </td>
+            <td >
+              <a class="links" target="_blank" :href="item.url">
+                {{ item.url | shortLink }}</a
+              >
+            </td>
+            <!-- <td class="text-center">
+              <small>{{ item.clickedAt }}</small>
+            </td> -->
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </template>
 
@@ -52,7 +101,7 @@ export default {
       return this.$store.getters.getAllLinks.reverse();
     },
     allSubscribedLinks() {
-      return this.$store.getters.allSubscribedLinks;
+      return this.$store.getters.allSubscribedLinks.reverse();
     },
     isLoggedIn() {
       return this.$store.getters.isLoggedIn;
@@ -70,6 +119,12 @@ export default {
         this.$router.push("/");
       }, 2000);
     },
+  },
+
+  data() {
+    return {
+      switchStatus:true
+    }
   },
 
   filters: {

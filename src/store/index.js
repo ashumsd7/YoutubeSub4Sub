@@ -113,10 +113,10 @@ export default new Vuex.Store({
       let data;
 
       data = {
-        requestedURLs: [],
+        requestedURLs: [{url:'111',clickedAt:'222'} ],
         maxPoint: 40,
         isPro: false,
-        clickedURLs: [],
+        clickedURLs: [{url:'333',requestedAt:'444'}],
       };
 
       let user = context.state.currentUserPasscode.toString();
@@ -130,7 +130,7 @@ export default new Vuex.Store({
           if (!res.data) {
             context.dispatch("UPDATE_LOGIN_STATUS", true);
           }
-          // console.log(res);
+          
         })
         .catch((err) => {
           console.log("errtr", err);
@@ -139,8 +139,7 @@ export default new Vuex.Store({
 
 
     prepareEntryAction(context,payload){
-      // console.log("fired");
-      // console.log(payload);
+    
       let user = payload.passcode.toString();
       axios
       .get(
