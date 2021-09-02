@@ -107,6 +107,7 @@ export default {
         this.$store.dispatch("makeEntryAction", {
           passcode: this.requestedID,
           link: this.link,
+          date:new Date().toLocaleString() 
         });
       } else {
         this.isURLError = true;
@@ -125,6 +126,9 @@ export default {
     makeEditable(){
         this.isReadonly=false
     }
+  },
+  mounted() {
+    this.$store.dispatch('prepareEntryAction',{passcode:this.requestedID})
   },
 };
 </script>
