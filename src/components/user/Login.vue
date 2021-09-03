@@ -18,11 +18,7 @@
           <div v-if="isError" id="invalidText" class="form-text">
             {{ passcode }} is not a valid passcode.
           </div>
-          <!-- <div class="mb-3">
-    <label for="exampleInputEmail1" class="form-label">User ID</label>
-    <input required type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-    <div id="emailHelp" class="form-text">Enter User ID provided by vendor.</div>
-  </div> -->
+       
           <div class="mb-3">
             <label for="exampleInputPassword1" class="form-label"
               >Passcode</label
@@ -90,25 +86,7 @@ export default {
       this.isError= false;
 
     }
-    // autoLogin() {
-    //   let passcode = localStorage.getItem("passcode");
-    //   if(!passcode){
-    //       alert("Auto login failed, Please try mannualy.")
-
-    //       return;
-    //   }
-    //   let answer = confirm(
-    //     `We are trying to login with this ${passcode} passcode?`,
-    //     false
-    //   );
-    //   if (answer) {
-    //     this.$store.dispatch("autoLoginAction");
-
-    //     this.$router.push("/list");
-    //   } else {
-    //     return;
-    //   }
-    // },
+   
   },
 };
 </script>

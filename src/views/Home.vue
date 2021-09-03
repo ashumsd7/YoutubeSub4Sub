@@ -7,7 +7,7 @@
 </template>
 
 <script>
-// @ is an alias to /src
+
 
 
 import HomeScreen  from '../components/inViews/HomeScreen.vue'
