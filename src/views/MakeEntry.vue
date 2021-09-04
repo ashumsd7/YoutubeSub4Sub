@@ -126,6 +126,7 @@ export default {
   mounted() {
   
     this.$store.dispatch('prepareEntryAction',{passcode:this.requestedID})
+    // this.$store.dispatch('fetchUsersPasscode')
   },
 };
 </script>

@@ -57,13 +57,14 @@ export default new Vuex.Store({
     },
     //push in clicled links
     UPDATE_CLICKED_URL(state, data) {
+      console.log("pahle ka clicked data");
+      console.log(state.clickedURLs);
       state.clickedURLs.push(data);
+      console.log("baad ka clicked data");
       console.log(state.clickedURLs);
     },
     //push in req links
    ADD_YOUTUBE_LINKS(state, data) {
-     alert("i am")
-     console.log("pahle ke uls are",state.requestedURLs);
       state.requestedURLs.push(data)
     },
     UPDATE_SHARED_DATA(state, payload) {
@@ -252,6 +253,8 @@ export default new Vuex.Store({
         clickedURLs: context.state.clickedURLs,
 
       };
+      console.log("About to commit reward");
+      console.log(data);
       let currentUser= context.getters.getCurrentUser;
       let uniqueKey= context.getters.getUniqueKey;
       axios
