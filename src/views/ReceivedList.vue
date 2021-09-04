@@ -80,8 +80,8 @@
               <span class="badge bg-dark">{{ ++idx }} </span>
             </td>
             <td >
-              <a class="links" target="_blank" :href="item.url">
-                {{ item.url  }}</a
+              <small class="links" >
+                {{ item.url  }}</small
               >
             </td>
             <!-- <td class="text-center">

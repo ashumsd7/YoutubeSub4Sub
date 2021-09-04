@@ -53,16 +53,11 @@ export default new Vuex.Store({
     
     //push in clicled links
     UPDATE_CLICKED_URL(state, data) {
-      console.log("pahle ka clicked data");
-      console.log(state.clickedURLs);
+     
       state.clickedURLs.push(data);
-      console.log("baad ka clicked data");
-      console.log(state.clickedURLs);
+   
     },
-      //push in req links
-   ADD_YOUTUBE_LINKS(state, data) {
-      state.requestedURLs.push(data)
-    },
+ 
 
     UPDATE_CURRENT_REST_DATA(state,payload){
       state.uniqueKey = payload.unique_key;
@@ -122,7 +117,7 @@ export default new Vuex.Store({
           
         })
         .catch((err) => {
-          console.log("errtr", err);
+          console.log("errr", err);
         });
     },
 
@@ -182,13 +177,16 @@ export default new Vuex.Store({
 
       let data = {
         requestedURLs: context.state.sharedRequestedURL,
-        maxPoint: context.getters.maxPointShared,
-        isPro: context.getters.isProShared,
+        maxPoint: context.state.maxPointShared,
+        isPro: context.state.isProShared,
         clickedURLs: context.state.sharedClickedURL,
 
       };
       let sharedUser= context.state.sharedPasscode;
       let uniqueKey= context.state.sharedUniqueKey;
+
+      
+      // return;
       axios
         .put(
           `https://sub4sub-cb7f9-default-rtdb.firebaseio.com/${sharedUser}/${uniqueKey}.json`,
@@ -220,8 +218,6 @@ export default new Vuex.Store({
         clickedURLs: context.state.clickedURLs,
 
       };
-      console.log("About to commit reward");
-      console.log(data);
       let currentUser= context.getters.getCurrentUser;
       let uniqueKey= context.getters.getUniqueKey;
       axios
@@ -256,8 +252,7 @@ export default new Vuex.Store({
             context.commit("UPDATE_LOGIN_STATUS", true);
             context.commit("UPDATE_LOGIN_ERROR_STATUS", false);
           let fetchedLinks = res.data;
-          console.log("fethced links ",res );
-          console.log(fetchedLinks);
+          
           let val = Object.keys(fetchedLinks)[0];
           let unique_key = val;
           let requestedURLs = fetchedLinks[val].requestedURLs;
@@ -293,14 +288,12 @@ export default new Vuex.Store({
       return state.currentUserPasscode;
     },
     getAllLinks(state) {
-      let updatedLinks=[]
-      if(state.requestedURLs.length>1){    
-        state.requestedURLs.splice(0,1)
-        updatedLinks= state.requestedURLs
-        return updatedLinks;
-      }
-  
-      return state.requestedURLs;
+     let filteredLinks= state.requestedURLs.filter(item=>{
+        let p =
+        /^(?:https?:\/\/)?(?:www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/;
+       return item.url.match(p) ? RegExp.$1 : false;
+      })
+      return filteredLinks;
      
     },
     isLoginError(state) {
@@ -308,13 +301,12 @@ export default new Vuex.Store({
     },
     allSubscribedLinks(state) {
 
-      let updatedLinks=[]
-      if(state.clickedURLs.length>1){
-        state.clickedURLs.splice(0,1)
-        updatedLinks= state.clickedURLs
-        return updatedLinks;
-      }
-      return state.clickedURLs;
+      let filteredLinks= state.clickedURLs.filter(item=>{
+        let p =
+        /^(?:https?:\/\/)?(?:www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/;
+       return item.url.match(p) ? RegExp.$1 : false;
+      })
+      return filteredLinks;
     },
     getProStatus(state) {
       return state.isPro;
