@@ -8,8 +8,8 @@ export default new Vuex.Store({
   state: {
     currentUserPasscode: undefined,
     isLoggedIn: false,
-    allUsers: [],
-    allLink: [],
+    // allUsers: [],
+    // allLink: [],
     loginError: false,
 
     requestedURLs: [],
@@ -85,12 +85,12 @@ export default new Vuex.Store({
   actions: {
     updateUserAction() {},
 
-    autoLoginAction(context) {
-      let storedUser = localStorage.getItem("passcode");
-      if (!!storedUser) {
-        context.dispatch("loginAction", { passcode: storedUser });
-      }
-    },
+    // autoLoginAction(context) {
+    //   let storedUser = localStorage.getItem("passcode");
+    //   if (!!storedUser) {
+    //     context.dispatch("loginAction", { passcode: storedUser });
+    //   }
+    // },
 
     logOutAction(context) {
       localStorage.removeItem("passcode");
@@ -101,6 +101,7 @@ export default new Vuex.Store({
     },
 
     loginAction(context, payload) {
+      
       payload.passcode = payload.passcode.toString();
       context.commit("UPDATE_USER", payload);
       axios
@@ -165,7 +166,7 @@ export default new Vuex.Store({
     prepareEntryAction(context,payload){
     
       let user = payload.passcode.toString();
-      console.log("kind hearted is ", user);
+      // console.log("kind hearted is ", user);
       axios
       .get(
         `https://sub4sub-cb7f9-default-rtdb.firebaseio.com/${user}.json`,
@@ -173,7 +174,7 @@ export default new Vuex.Store({
       )
       .then((res) => {
         let unique_key = Object.keys(res.data)[0];
-        console.log("shared user is", user);
+        // console.log("shared user is", user);
         context.commit('UPDATE_SHARED_DATA',{ passcode: user, unique_key:unique_key})
         context.dispatch('getKindHeartedData',{passcode:user})
       })
@@ -183,7 +184,7 @@ export default new Vuex.Store({
     },
 
     getKindHeartedData(context, payload){
-      console.log("getting kind heated data");
+      // console.log("getting kind heated data");
       axios
       .get(
         `https://sub4sub-cb7f9-default-rtdb.firebaseio.com/${payload.passcode}.json`
@@ -191,7 +192,7 @@ export default new Vuex.Store({
       .then((res) => {
         let fetchedLinks = res.data;
         let val = Object.keys(fetchedLinks)[0];
-        console.log("unique Key",val);
+        // console.log("unique Key",val);
         let unique_key = val;
         let requestedURLs = fetchedLinks[val].requestedURLs;
         let clickedURLs = fetchedLinks[val].clickedURLs;
@@ -270,12 +271,22 @@ export default new Vuex.Store({
         });
     },
     fetchUsersPasscode(context, payload) {
+      payload.passcode = payload.passcode.toString();
+      context.commit("UPDATE_USER", payload);
+
+
+
       axios
         .get(
           `https://sub4sub-cb7f9-default-rtdb.firebaseio.com/${payload.passcode}.json`
         )
         .then((res) => {
+          if (res.data !== null) {
+            context.commit("UPDATE_LOGIN_STATUS", true);
+            context.commit("UPDATE_LOGIN_ERROR_STATUS", false);
           let fetchedLinks = res.data;
+          console.log("fethced links ",res );
+          console.log(fetchedLinks);
           let val = Object.keys(fetchedLinks)[0];
           let unique_key = val;
           let requestedURLs = fetchedLinks[val].requestedURLs;
@@ -288,8 +299,14 @@ export default new Vuex.Store({
           context.commit("UPDATE_MAX_POINTS", maxPoint);
           context.commit("UPDATE_PRO_STATUS", isPro);
           context.commit("UPDATE_UNIQUE_KEY", unique_key);
+          }
+          else{
+            context.commit("UPDATE_LOGIN_ERROR_STATUS", true);
+          }
+
         })
         .catch((err) => {
+          context.commit("UPDATE_LOGIN_ERROR_STATUS", true);
           console.log(err);
         });
     },
@@ -304,11 +321,11 @@ export default new Vuex.Store({
     getAllLinks(state) {
       // alert("Adhu")
       let updatedLinks=[]
-      console.log("requested urls length",state.requestedURLs.length );
+      // console.log("requested urls length",state.requestedURLs.length );
       if(state.requestedURLs.length>1){
-        console.log("len is more than 1", state.requestedURLs);
+        // console.log("len is more than 1", state.requestedURLs);
         state.requestedURLs.splice(0,1)
-        console.log("forked", state.requestedURLs);
+        // console.log("forked", state.requestedURLs);
         updatedLinks= state.requestedURLs
         return updatedLinks;
       }
