@@ -1,5 +1,6 @@
 <template>
   <div class="row">
+    <!-- <h3>Something went wrong</h3> -->
     <!-- <h2 v-if="!!getAllLinks.length || !!allSubscribedLinks.length ">No Data Found</h2> -->
     <div @click="switchStatus=!switchStatus"  class="btn btn-warning">{{switchStatus? 'SWICTH TO CLICKED LIST' : 'SWICTH TO REQUEST LIST'}}</div>
     <div v-if="switchStatus" class="">
@@ -81,7 +82,7 @@
             </td>
             <td >
               <a class="links" target="_blank" :href="item.url">
-                {{ item.url | shortLink }}</a
+                {{ item.url  }}</a
               >
             </td>
             <!-- <td class="text-center">

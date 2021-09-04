@@ -44,7 +44,7 @@ export default {
   },
   methods: {
     onSubmit() {
-        if(this.adminId!=='boomboom'){
+        if(this.adminId!=='boom'){
             this.isAdminErr=true;
                  
         
