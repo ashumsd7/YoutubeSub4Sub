@@ -17,7 +17,11 @@ export default {
     QuickLinks
   },
   created() {
-     this.$store.dispatch('autoLoginAction')
+    //  this.$store.dispatch('autoLoginAction')
+     let storedUser = localStorage.getItem("passcode");
+      if (!!storedUser) {
+        this.$store.dispatch("fetchUsersPasscode", { passcode: storedUser });
+      }
   },
 }
 </script>
