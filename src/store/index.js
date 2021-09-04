@@ -18,8 +18,15 @@ export default new Vuex.Store({
     maxPoint: 40,
     uniqueKey: "",
 
+//KIND HEARTED DATA ( WHO SHARED LINK WITH YOU)
+
     sharedUniqueKey:'',
-    sharedPasscode:''
+    sharedPasscode:'',
+    sharedRequestedURL:[],
+    sharedClickedURL:[],
+    isProShared: false,
+    maxPointShared: 40,
+    
   },
   mutations: {
     UPDATE_USER(state, payload) {
@@ -29,6 +36,7 @@ export default new Vuex.Store({
       state.isLoggedIn = status;
     },
     UPDATE_YOUTUBE_LINKS(state, links) {
+      
       state.requestedURLs = links;
     },
 
@@ -54,12 +62,25 @@ export default new Vuex.Store({
     },
     //push in req links
    ADD_YOUTUBE_LINKS(state, data) {
+     alert("i am")
+     console.log("pahle ke uls are",state.requestedURLs);
       state.requestedURLs.push(data)
     },
     UPDATE_SHARED_DATA(state, payload) {
       state.sharedPasscode= payload.passcode;
       state.sharedUniqueKey= payload.unique_key
     },
+  
+    UPDATED_SHARED_REST_DATA(state,payload){
+      state.sharedRequestedURL= payload.requestedURLs;
+      state.sharedClickedURL= payload.clickedURLs;
+      state.isProShared= payload.isPro;
+      state.maxPointShared= payload.maxPoint;
+    },
+
+    UPDATE_SHARED_REQUESTED_URLS(state,payload){
+      state.sharedRequestedURL.push(payload)
+    }
   },
   actions: {
     updateUserAction() {},
@@ -138,48 +159,64 @@ export default new Vuex.Store({
     },
 
 
+// WHEN USER IS GOING TO SHARE THEIR YOUTUBE URL 
+// ---------START--------------
+
     prepareEntryAction(context,payload){
     
       let user = payload.passcode.toString();
+      console.log("kind hearted is ", user);
       axios
       .get(
         `https://sub4sub-cb7f9-default-rtdb.firebaseio.com/${user}.json`,
         
       )
       .then((res) => {
-        // if (!res.data) {
-        //   // context.dispatch("UPDATE_LOGIN_STATUS", true);
-        // }
         let unique_key = Object.keys(res.data)[0];
         console.log("shared user is", user);
         context.commit('UPDATE_SHARED_DATA',{ passcode: user, unique_key:unique_key})
-       
+        context.dispatch('getKindHeartedData',{passcode:user})
       })
       .catch((err) => {
         console.log("errtr", err);
       });
     },
 
+    getKindHeartedData(context, payload){
+      console.log("getting kind heated data");
+      axios
+      .get(
+        `https://sub4sub-cb7f9-default-rtdb.firebaseio.com/${payload.passcode}.json`
+      )
+      .then((res) => {
+        let fetchedLinks = res.data;
+        let val = Object.keys(fetchedLinks)[0];
+        console.log("unique Key",val);
+        let unique_key = val;
+        let requestedURLs = fetchedLinks[val].requestedURLs;
+        let clickedURLs = fetchedLinks[val].clickedURLs;
+        let isPro = fetchedLinks[val].isPro;
+        let maxPoint = fetchedLinks[val].maxPoint;
+      context.commit('UPDATED_SHARED_REST_DATA',{ requestedURLs: requestedURLs, clickedURLs:clickedURLs,isPro:isPro, maxPoint:maxPoint })
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    },
+
     makeEntryAction(context, payload) {
-      console.log("payload requested making entry", payload);
       payload.passcode = payload.passcode.toString();
-
-      // let data;
-
-      // data = { url: payload.link, date: new Date().toLocaleString() };
-
       let user = payload.passcode.toString();
-
-      context.commit("ADD_YOUTUBE_LINKS", {
+      context.commit("UPDATE_SHARED_REQUESTED_URLS", {
         url: payload.link,
         requestedAt: payload.date,
       });
 
       let data = {
-        requestedURLs: context.state.requestedURLs,
-        maxPoint: context.getters.getMaxPoints,
-        isPro: context.getters.getProStatus,
-        clickedURLs: context.state.clickedURLs,
+        requestedURLs: context.state.sharedRequestedURL,
+        maxPoint: context.getters.maxPointShared,
+        isPro: context.getters.isProShared,
+        clickedURLs: context.state.sharedClickedURL,
 
       };
       let sharedUser= context.state.sharedPasscode;
@@ -190,15 +227,16 @@ export default new Vuex.Store({
           data
         )
         .then((response) => {
-          // console.log("sucesssss");
           alert("You have successfully requested :)")
-          // console.log(response);
+         
         })
         .catch((error) => {
           alert("Something Went Wrong :( while requesting")
-          // console.log(error);
         });
     },
+
+// WHEN USER IS GOING TO SHARE THEIR YOUTUBE URL 
+    // ---------END   --------------
 
     rewardEntryAction(context, payload) {
       // console.log("this is ",payload);
@@ -238,19 +276,11 @@ export default new Vuex.Store({
         )
         .then((res) => {
           let fetchedLinks = res.data;
-          // console.log(Object.keys(fetchedLinks)[0]);
-          //val is unique key
           let val = Object.keys(fetchedLinks)[0];
-
-          // console.log("unique Key",val);
           let unique_key = val;
-          // console.log("all reqURLS", fetchedLinks[val].requestedURLs);
           let requestedURLs = fetchedLinks[val].requestedURLs;
-          // console.log("all cliked", fetchedLinks[val].clickedURLs);
           let clickedURLs = fetchedLinks[val].clickedURLs;
-          // console.log("is Pro", fetchedLinks[val].isPro);
           let isPro = fetchedLinks[val].isPro;
-          // console.log("max points", fetchedLinks[val].maxPoint);
           let maxPoint = fetchedLinks[val].maxPoint;
 
           context.commit("UPDATE_TOTAL_SUBSCRIBTION", clickedURLs);
@@ -272,12 +302,31 @@ export default new Vuex.Store({
       return state.currentUserPasscode;
     },
     getAllLinks(state) {
+      // alert("Adhu")
+      let updatedLinks=[]
+      console.log("requested urls length",state.requestedURLs.length );
+      if(state.requestedURLs.length>1){
+        console.log("len is more than 1", state.requestedURLs);
+        state.requestedURLs.splice(0,1)
+        console.log("forked", state.requestedURLs);
+        updatedLinks= state.requestedURLs
+        return updatedLinks;
+      }
+  
       return state.requestedURLs;
+     
     },
     isLoginError(state) {
       return state.loginError;
     },
     allSubscribedLinks(state) {
+
+      let updatedLinks=[]
+      if(state.clickedURLs.length>1){
+        state.clickedURLs.splice(0,1)
+        updatedLinks= state.clickedURLs
+        return updatedLinks;
+      }
       return state.clickedURLs;
     },
     getProStatus(state) {

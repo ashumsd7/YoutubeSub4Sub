@@ -1,7 +1,6 @@
 <template>
   <div class="row">
-    <!-- <h3>Something went wrong</h3> -->
-    <!-- <h2 v-if="!!getAllLinks.length || !!allSubscribedLinks.length ">No Data Found</h2> -->
+   
     <div @click="switchStatus=!switchStatus"  class="btn btn-warning">{{switchStatus? 'SWICTH TO CLICKED LIST' : 'SWICTH TO REQUEST LIST'}}</div>
     <div v-if="switchStatus" class="">
       <h4 class="heading2 text-center mt-2">Requests List for subscribtions</h4>
@@ -18,9 +17,9 @@
         sub4sub.</small
       >
       <hr />
-      <small class="ms-auto text-center">
+      <!-- <small class="ms-auto text-center">
         Showing {{ getAllLinks.length }} Requests</small
-      >
+      > -->
 
       <table class="table">
         <thead>
@@ -31,7 +30,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(item, idx) in getAllLinks" :key="item.idx">
+          <tr v-for="(item, idx) in getRequestedLinks" :key="item.idx">
             <td class="text-center" scope="row">
               <span class="badge bg-dark">{{ ++idx }} </span>
             </td>
@@ -98,8 +97,8 @@
 <script>
 export default {
   computed: {
-    getAllLinks() {
-      return this.$store.getters.getAllLinks.reverse();
+    getRequestedLinks() {
+      return this.$store.getters.getAllLinks;
     },
     allSubscribedLinks() {
       return this.$store.getters.allSubscribedLinks.reverse();
@@ -124,7 +123,7 @@ export default {
 
   data() {
     return {
-      switchStatus:true
+      switchStatus:true,
     }
   },
 
@@ -132,7 +131,7 @@ export default {
     shortLink(link) {
       link = link.split("");
       link.splice(3, link.length / 2, "****");
-      // console.log(link);
+ 
       return link.join("");
     },
   },

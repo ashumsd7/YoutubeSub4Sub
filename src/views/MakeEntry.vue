@@ -85,10 +85,8 @@ export default {
   
   created() {
     this.requestedID = this.$route.params.id;
-    alert( this.requestedID)
     
      this.requestedID=  this.requestedID/1997;
-     console.log("received ID is",  this.requestedID)
     this.showReqID = this.$route.params.id;
     // this.showReqID=(this.showReqID*1997).toString(8) 
     this.showReqID= this.showReqID.split('')
@@ -96,11 +94,7 @@ export default {
              this.showReqID = this.showReqID.join('')
             
   },
-  //   beforeRouteEnter (to, from, next) {
-  //       if(!this.isLoggedIn){
-  //           this.$router.push('/')
-  //       }
-  //   },
+
   methods: {
     onSubmit() {
       if (this.vlaidateLink(this.link)) {
@@ -109,6 +103,7 @@ export default {
           link: this.link,
           date:new Date().toLocaleString() 
         });
+        this.$router.push('/')
       } else {
         this.isURLError = true;
         setTimeout(() => {
@@ -121,13 +116,15 @@ export default {
     vlaidateLink(url) {
       var p =
         /^(?:https?:\/\/)?(?:www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/;
-      return url.match(p) ? RegExp.$1 : false;
+      // return url.match(p) ? RegExp.$1 : false;
+      return true
     },
     makeEditable(){
         this.isReadonly=false
     }
   },
   mounted() {
+  
     this.$store.dispatch('prepareEntryAction',{passcode:this.requestedID})
   },
 };
