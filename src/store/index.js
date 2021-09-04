@@ -43,29 +43,38 @@ export default new Vuex.Store({
     UPDATE_TOTAL_SUBSCRIBTION(state, links) {
       state.clickedURLs = links;
     },
-    UPDATE_MAX_POINTS(state, points) {
-      state.maxPoint = points;
-    },
-    UPDATE_PRO_STATUS(state, status) {
-      state.isPro = status;
-    },
+    
+    // currentUserData
     UPDATE_LOGIN_ERROR_STATUS(state, status) {
       state.loginError = status;
     },
     UPDATE_UNIQUE_KEY(state, key) {
       state.uniqueKey = key;
     },
+    UPDATE_MAX_POINTS(state, points) {
+      state.maxPoint = points;
+    },
+    UPDATE_PRO_STATUS(state, status) {
+      state.isPro = status;
+    },
+
+
+    
     //push in clicled links
     UPDATE_CLICKED_URL(state, data) {
       state.clickedURLs.push(data);
       console.log(state.clickedURLs);
     },
-    //push in req links
+      //push in req links
    ADD_YOUTUBE_LINKS(state, data) {
-     alert("i am")
-     console.log("pahle ke uls are",state.requestedURLs);
-      state.requestedURLs.push(data)
-    },
+    alert("i am")
+    console.log("pahle ke uls are",state.requestedURLs);
+     state.requestedURLs.push(data)
+   },
+
+ 
+
+  
     UPDATE_SHARED_DATA(state, payload) {
       state.sharedPasscode= payload.passcode;
       state.sharedUniqueKey= payload.unique_key
@@ -296,6 +305,11 @@ export default new Vuex.Store({
 
           context.commit("UPDATE_TOTAL_SUBSCRIBTION", clickedURLs);
           context.commit("UPDATE_YOUTUBE_LINKS", requestedURLs);
+          let currentUserData={
+            maxPoint: maxPoint,
+            isPro: isPro,
+            unique_key: unique_key
+          }
           context.commit("UPDATE_MAX_POINTS", maxPoint);
           context.commit("UPDATE_PRO_STATUS", isPro);
           context.commit("UPDATE_UNIQUE_KEY", unique_key);
