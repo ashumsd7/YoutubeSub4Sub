@@ -101,34 +101,34 @@ export default new Vuex.Store({
       context.commit("UPDATE_YOUTUBE_LINKS", []);
     },
 
-    loginAction(context, payload) {
+    // loginAction(context, payload) {
       
-      payload.passcode = payload.passcode.toString();
-      context.commit("UPDATE_USER", payload);
-      axios
-        .get(
-          `https://sub4sub-cb7f9-default-rtdb.firebaseio.com/${context.state.currentUserPasscode}.json`
-        )
-        .then((res) => {
-          if (res.data !== null) {
-            // console.log(res.data);
-            context.commit("UPDATE_LOGIN_STATUS", true);
-            context.commit("UPDATE_LOGIN_ERROR_STATUS", false);
-            localStorage.setItem("passcode", context.state.currentUserPasscode);
-            context.dispatch("fetchUsersPasscode", {
-              passcode: context.state.currentUserPasscode,
-            });
-          } else {
-            // console.log("errrrrrr nulll");
-            context.commit("UPDATE_LOGIN_ERROR_STATUS", true);
-          }
-          // console.log(res);
-        })
-        .catch((err) => {
-          context.commit("UPDATE_LOGIN_ERROR_STATUS", true);
-          console.log(err);
-        });
-    },
+    //   payload.passcode = payload.passcode.toString();
+    //   context.commit("UPDATE_USER", payload);
+    //   axios
+    //     .get(
+    //       `https://sub4sub-cb7f9-default-rtdb.firebaseio.com/${context.state.currentUserPasscode}.json`
+    //     )
+    //     .then((res) => {
+    //       if (res.data !== null) {
+    //         // console.log(res.data);
+    //         context.commit("UPDATE_LOGIN_STATUS", true);
+    //         context.commit("UPDATE_LOGIN_ERROR_STATUS", false);
+    //         localStorage.setItem("passcode", context.state.currentUserPasscode);
+    //         context.dispatch("fetchUsersPasscode", {
+    //           passcode: context.state.currentUserPasscode,
+    //         });
+    //       } else {
+    //         // console.log("errrrrrr nulll");
+    //         context.commit("UPDATE_LOGIN_ERROR_STATUS", true);
+    //       }
+    //       // console.log(res);
+    //     })
+    //     .catch((err) => {
+    //       context.commit("UPDATE_LOGIN_ERROR_STATUS", true);
+    //       console.log(err);
+    //     });
+    // },
 
     adminLoginAction(context, payload) {
       payload.passcode = payload.passcode.toString();
@@ -273,7 +273,7 @@ export default new Vuex.Store({
           // console.log(error);
         });
     },
-    fetchUsersPasscode(context, payload) {
+    loginAction(context, payload) {
       payload.passcode = payload.passcode.toString();
       context.commit("UPDATE_USER", payload);
 

@@ -20,7 +20,7 @@ export default {
     //  this.$store.dispatch('autoLoginAction')
      let storedUser = localStorage.getItem("passcode");
       if (!!storedUser) {
-        this.$store.dispatch("fetchUsersPasscode", { passcode: storedUser });
+        this.$store.dispatch("loginAction", { passcode: storedUser });
       }
   },
 }
