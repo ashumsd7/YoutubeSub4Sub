@@ -6,12 +6,11 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    currentUserPasscode: undefined,
+//FLAGS STATE
     isLoggedIn: false,
-    // allUsers: [],
-    // allLink: [],
     loginError: false,
-
+//CURRENT USER STATE
+    currentUserPasscode: undefined,
     requestedURLs: [],
     clickedURLs: [],
     isPro: false,
@@ -29,12 +28,20 @@ export default new Vuex.Store({
     
   },
   mutations: {
-    UPDATE_USER(state, payload) {
-      state.currentUserPasscode = payload.passcode;
-    },
+
+    // MUTATION: FLAG STATUS
     UPDATE_LOGIN_STATUS(state, status) {
       state.isLoggedIn = status;
     },
+    UPDATE_LOGIN_ERROR_STATUS(state, status) {
+      state.loginError = status;
+    },
+
+    //MUTATTION: CURRENT USER STATUS
+    UPDATE_USER(state, payload) {
+      state.currentUserPasscode = payload.passcode;
+    },
+   
     UPDATE_YOUTUBE_LINKS(state, links) {
       
       state.requestedURLs = links;
@@ -44,37 +51,26 @@ export default new Vuex.Store({
       state.clickedURLs = links;
     },
     
-    // currentUserData
-    UPDATE_LOGIN_ERROR_STATUS(state, status) {
-      state.loginError = status;
-    },
-    UPDATE_UNIQUE_KEY(state, key) {
-      state.uniqueKey = key;
-    },
-    UPDATE_MAX_POINTS(state, points) {
-      state.maxPoint = points;
-    },
-    UPDATE_PRO_STATUS(state, status) {
-      state.isPro = status;
-    },
-
-
-    
     //push in clicled links
     UPDATE_CLICKED_URL(state, data) {
+      console.log("pahle ka clicked data");
+      console.log(state.clickedURLs);
       state.clickedURLs.push(data);
+      console.log("baad ka clicked data");
       console.log(state.clickedURLs);
     },
       //push in req links
    ADD_YOUTUBE_LINKS(state, data) {
-    alert("i am")
-    console.log("pahle ke uls are",state.requestedURLs);
-     state.requestedURLs.push(data)
-   },
+      state.requestedURLs.push(data)
+    },
 
- 
-
+    UPDATE_CURRENT_REST_DATA(state,payload){
+      state.uniqueKey = payload.unique_key;
+      state.maxPoint = payload.maxPoint;
+      state.isPro = payload.isPro;
   
+     },
+
     UPDATE_SHARED_DATA(state, payload) {
       state.sharedPasscode= payload.passcode;
       state.sharedUniqueKey= payload.unique_key
@@ -92,50 +88,12 @@ export default new Vuex.Store({
     }
   },
   actions: {
-    updateUserAction() {},
-
-    // autoLoginAction(context) {
-    //   let storedUser = localStorage.getItem("passcode");
-    //   if (!!storedUser) {
-    //     context.dispatch("loginAction", { passcode: storedUser });
-    //   }
-    // },
-
     logOutAction(context) {
       localStorage.removeItem("passcode");
       // window.location.reload();
       context.commit("UPDATE_LOGIN_STATUS", false);
       context.commit("UPDATE_TOTAL_SUBSCRIBTION", 0);
       context.commit("UPDATE_YOUTUBE_LINKS", []);
-    },
-
-    loginAction(context, payload) {
-      
-      payload.passcode = payload.passcode.toString();
-      context.commit("UPDATE_USER", payload);
-      axios
-        .get(
-          `https://sub4sub-cb7f9-default-rtdb.firebaseio.com/${context.state.currentUserPasscode}.json`
-        )
-        .then((res) => {
-          if (res.data !== null) {
-            // console.log(res.data);
-            context.commit("UPDATE_LOGIN_STATUS", true);
-            context.commit("UPDATE_LOGIN_ERROR_STATUS", false);
-            localStorage.setItem("passcode", context.state.currentUserPasscode);
-            context.dispatch("fetchUsersPasscode", {
-              passcode: context.state.currentUserPasscode,
-            });
-          } else {
-            // console.log("errrrrrr nulll");
-            context.commit("UPDATE_LOGIN_ERROR_STATUS", true);
-          }
-          // console.log(res);
-        })
-        .catch((err) => {
-          context.commit("UPDATE_LOGIN_ERROR_STATUS", true);
-          console.log(err);
-        });
     },
 
     adminLoginAction(context, payload) {
@@ -262,6 +220,8 @@ export default new Vuex.Store({
         clickedURLs: context.state.clickedURLs,
 
       };
+      console.log("About to commit reward");
+      console.log(data);
       let currentUser= context.getters.getCurrentUser;
       let uniqueKey= context.getters.getUniqueKey;
       axios
@@ -279,9 +239,10 @@ export default new Vuex.Store({
           // console.log(error);
         });
     },
-    fetchUsersPasscode(context, payload) {
+    loginAction(context, payload) {
       payload.passcode = payload.passcode.toString();
       context.commit("UPDATE_USER", payload);
+      
 
 
 
@@ -291,6 +252,7 @@ export default new Vuex.Store({
         )
         .then((res) => {
           if (res.data !== null) {
+            localStorage.setItem("passcode",payload.passcode);
             context.commit("UPDATE_LOGIN_STATUS", true);
             context.commit("UPDATE_LOGIN_ERROR_STATUS", false);
           let fetchedLinks = res.data;
@@ -310,9 +272,7 @@ export default new Vuex.Store({
             isPro: isPro,
             unique_key: unique_key
           }
-          context.commit("UPDATE_MAX_POINTS", maxPoint);
-          context.commit("UPDATE_PRO_STATUS", isPro);
-          context.commit("UPDATE_UNIQUE_KEY", unique_key);
+          context.commit('UPDATE_CURRENT_REST_DATA',currentUserData )
           }
           else{
             context.commit("UPDATE_LOGIN_ERROR_STATUS", true);
@@ -333,13 +293,9 @@ export default new Vuex.Store({
       return state.currentUserPasscode;
     },
     getAllLinks(state) {
-      // alert("Adhu")
       let updatedLinks=[]
-      // console.log("requested urls length",state.requestedURLs.length );
-      if(state.requestedURLs.length>1){
-        // console.log("len is more than 1", state.requestedURLs);
+      if(state.requestedURLs.length>1){    
         state.requestedURLs.splice(0,1)
-        // console.log("forked", state.requestedURLs);
         updatedLinks= state.requestedURLs
         return updatedLinks;
       }
